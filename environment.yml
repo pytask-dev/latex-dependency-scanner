@@ -1,0 +1,17 @@
+name: latex-dependency-scanner
+
+channels:
+  - conda-forge
+
+dependencies:
+  - python >=3.6
+  - pip
+
+  # Testing
+  - pytest
+
+  # Development
+  - black
+  - jupyterlab
+  - pre-commit
+  - tox-conda
