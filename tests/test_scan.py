@@ -92,7 +92,11 @@ def test_includegraphics(tmp_path, image_ext):
     """
     if image_ext == ".ps":
         pytest.xfail(
-            ".ps does not work with latexmk: https://tex.stackexchange.com/a/67904"
+            ".ps does not work with latexmk: https://tex.stackexchange.com/a/67904."
+        )
+    if image_ext == ".eps":
+        pytest.xfail(
+            ".eps maybe needs \\graphicspath: https://tex.stackexchange.com/a/98886."
         )
 
     source = """
