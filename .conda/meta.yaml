@@ -12,6 +12,7 @@ source:
 build:
   noarch: python
   number: 0
+  script: {{ PYTHON }} setup.py install --single-version-externally-managed --record record.txt
 
 requirements:
   host:
@@ -21,7 +22,6 @@ requirements:
 
   run:
     - python >=3.6
-    - setuptools
 
 test:
   imports:
@@ -37,6 +37,7 @@ test:
 about:
   home: https://github.com/pytask-dev/latex-dependency-scanner
   license: MIT
+  license_file: LICENSE
   summary: Shows you which files are included in a LaTeX document.
   doc_url: https://github.com/pytask-dev/latex-dependency-scanner
   dev_url: https://github.com/pytask-dev/latex-dependency-scanner
