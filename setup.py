@@ -1,9 +1,12 @@
 from setuptools import find_packages
 from setuptools import setup
 
+import versioneer
+
 setup(
     name="latex-dependency-scanner",
-    version="0.0.1",
+    version=versioneer.get_version(),
+    cmdclass=versioneer.get_cmdclass(),
     description="Scan LaTeX documents for their dependencies.",
     author="Tobias Raabe",
     author_email="raabe@posteo.de",
