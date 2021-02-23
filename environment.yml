@@ -18,3 +18,4 @@ dependencies:
   - jupyterlab
   - pre-commit
   - tox-conda
+  - versioneer
