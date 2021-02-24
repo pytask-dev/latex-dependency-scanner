@@ -7,6 +7,13 @@ in reverse chronological order. Releases follow `semantic versioning
 <https://anaconda.org/pytask/latex-dependency-scanner>`_.
 
 
+0.0.2 - 2021-02-24
+------------------
+
+- :gh:`3` prepares the package to be published on PyPI, introduces versioneer, and
+  publishing on PyPI per tag.
+
+
 0.0.1 - 2020-12-27
 ------------------
 
