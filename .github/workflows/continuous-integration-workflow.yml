@@ -35,7 +35,7 @@ jobs:
 
       - name: Install Windows dependencies.
         uses: crazy-max/ghaction-chocolatey@v1
-        if: runner.os != 'Windows'
+        if: runner.os == 'Windows'
         with:
           args: install ghostscript -y
 
