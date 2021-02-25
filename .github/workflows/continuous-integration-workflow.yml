@@ -23,6 +23,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: r-lib/actions/setup-tinytex@v1
+        if: runner.os != 'Windows'
       - uses: conda-incubator/setup-miniconda@v2
         with:
           auto-update-conda: true
@@ -33,14 +34,8 @@ jobs:
         shell: bash -l {0}
         run: brew install ghostscript
 
-      - name: Install Windows dependencies.
-        uses: crazy-max/ghaction-chocolatey@v1
-        if: runner.os == 'Windows'
-        with:
-          args: install ghostscript -y
-
       - name: Install LaTeX dependencies.
-        # if: runner.os != 'Windows'
+        if: runner.os != 'Windows'
         shell: bash -l {0}
         run: tlmgr install import epstopdf biblatex biber
 
@@ -58,15 +53,6 @@ jobs:
         if: runner.os == 'Linux' && matrix.python-version == '3.8'
         shell: bash -l {0}
         run: bash <(curl -s https://codecov.io/bash) -F unit -c
-
-      # - name: Run integration tests.
-      #   shell: bash -l {0}
-      #   run: tox -e pytest -- src tests -m integration --cov=./ --cov-report=xml -n auto
-
-      # - name: Upload coverage reports of integration tests.
-      #   if: runner.os == 'Linux' && matrix.python-version == '3.8'
-      #   shell: bash -l {0}
-      #   run: bash <(curl -s https://codecov.io/bash) -F integration -c
 
       - name: Run end-to-end tests.
         shell: bash -l {0}

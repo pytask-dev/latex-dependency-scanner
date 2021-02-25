@@ -12,7 +12,7 @@
 .. image:: https://anaconda.org/pytask/latex-dependency-scanner/badges/platforms.svg
     :target: https://anaconda.org/pytask/latex-dependency-scanner
 
-.. image:: https://github.com/pytask-dev/latex-dependency-scanner/workflows/build/badge.svg?branch=main
+.. image:: https://github.com/pytask-dev/latex-dependency-scanner/workflows/Continuous%20Integration%20Workflow/badge.svg?branch=main
     :target: https://github.com/pytask-dev/latex-dependency-scanner/actions?query=branch%3Amain
 
 .. image:: https://codecov.io/gh/pytask-dev/latex-dependency-scanner/branch/main/graph/badge.svg
