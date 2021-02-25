@@ -23,7 +23,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: r-lib/actions/setup-tinytex@v1
-        if: runner.os != 'Windows'
       - uses: conda-incubator/setup-miniconda@v2
         with:
           auto-update-conda: true
@@ -33,6 +32,12 @@ jobs:
         if: runner.os == 'macOS'
         shell: bash -l {0}
         run: brew install ghostscript
+
+      - name: Install Windows dependencies.
+        uses: crazy-max/ghaction-chocolatey@v1
+        if: runner.os != 'Windows'
+        with:
+          args: install ghostscript -y
 
       - name: Install LaTeX dependencies.
         if: runner.os != 'Windows'
