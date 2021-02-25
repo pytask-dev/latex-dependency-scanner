@@ -8,6 +8,12 @@ in reverse chronological order. Releases follow `semantic versioning
 <https://anaconda.org/pytask/latex-dependency-scanner>`_.
 
 
+0.0.3 - 2021-xx-xx
+------------------
+
+- :gh:`4` adds the PyPI install option to the README and more shields.
+
+
 0.0.2 - 2021-02-24
 ------------------
 
