@@ -3,6 +3,16 @@ from setuptools import setup
 
 import versioneer
 
+
+PROJECT_URLS = {
+    "Documentation": "https://github.com/pytask-dev/latex-dependency-scanner",
+    "Github": "https://github.com/pytask-dev/latex-dependency-scanner",
+    "Tracker": "https://github.com/pytask-dev/latex-dependency-scanner/issues",
+    "Changelog": "https://github.com/pytask-dev/latex-dependency-scanner/blob/main/"
+    "CHANGES.rst",
+}
+
+
 setup(
     name="latex-dependency-scanner",
     version=versioneer.get_version(),
@@ -11,6 +21,8 @@ setup(
     author="Tobias Raabe",
     author_email="raabe@posteo.de",
     python_requires=">=3.6",
+    url=PROJECT_URLS["Github"],
+    project_urls=PROJECT_URLS,
     license="MIT",
     classifiers=[
         "Development Status :: 3 - Alpha",
