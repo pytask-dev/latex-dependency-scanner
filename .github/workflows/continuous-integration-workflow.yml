@@ -40,7 +40,7 @@ jobs:
           args: install ghostscript -y
 
       - name: Install LaTeX dependencies.
-        if: runner.os != 'Windows'
+        # if: runner.os != 'Windows'
         shell: bash -l {0}
         run: tlmgr install import epstopdf biblatex biber
 
