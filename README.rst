@@ -40,15 +40,14 @@ Installation
 ------------
 
 latex-dependency-scanner is available on `PyPI
-<https://pypi.org/project/latex-dependency-scanner>`_
+<https://pypi.org/project/latex-dependency-scanner>`_ and `Anaconda.org
+<https://anaconda.org/pytask/latex-dependency-scanner>`_. Install it with
 
 .. code-block:: console
 
     $ pip install latex-dependency-scanner
 
-and `Anaconda.org <https://anaconda.org/pytask/latex-dependency-scanner>`_
-
-.. code-block:: console
+    # or
 
     $ conda config --add channels conda-forge --add channels pytask
     $ conda install latex-dependency-scanner
