@@ -1,11 +1,19 @@
+.. image:: https://img.shields.io/pypi/v/latex-dependency-scanner?color=blue
+    :alt: PyPI
+    :target: https://pypi.org/project/latex-dependency-scanner
+
+.. image:: https://img.shields.io/pypi/pyversions/latex-dependency-scanner
+    :alt: PyPI - Python Version
+    :target: https://pypi.org/project/latex-dependency-scanner
+
 .. image:: https://anaconda.org/pytask/latex-dependency-scanner/badges/version.svg
     :target: https://anaconda.org/pytask/latex-dependency-scanner
 
 .. image:: https://anaconda.org/pytask/latex-dependency-scanner/badges/platforms.svg
     :target: https://anaconda.org/pytask/latex-dependency-scanner
 
-.. .. image:: https://readthedocs.org/projects/pytask-dev/badge/?version=latest
-..     :target: https://pytask-dev.readthedocs.io/en/latest
+.. image:: https://img.shields.io/pypi/l/latex-dependency-scanner
+    :alt: PyPI - License
 
 .. image:: https://github.com/pytask-dev/latex-dependency-scanner/workflows/Continuous%20Integration%20Workflow/badge.svg?branch=main
     :target: https://github.com/pytask-dev/latex-dependency-scanner/actions?query=branch%3Amain
@@ -24,17 +32,22 @@
 Features
 --------
 
-The latex-dependency-scanner is a package to detect all related files of a LaTeX
+latex-dependency-scanner is a package to detect all required files to compile a LaTeX
 document.
 
 
 Installation
 ------------
 
-latex-dependency-scanner is available on `Anaconda.org
-<https://anaconda.org/pytask/latex-dependency-scanner>`_. Install the package with
+latex-dependency-scanner is available on `PyPI
+<https://pypi.org/project/latex-dependency-scanner>`_ and `Anaconda.org
+<https://anaconda.org/pytask/latex-dependency-scanner>`_. Install it with
 
 .. code-block:: console
+
+    $ pip install latex-dependency-scanner
+
+    # or
 
     $ conda config --add channels conda-forge --add channels pytask
     $ conda install latex-dependency-scanner
