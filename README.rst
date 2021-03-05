@@ -6,17 +6,18 @@
     :alt: PyPI - Python Version
     :target: https://pypi.org/project/latex-dependency-scanner
 
-.. image:: https://anaconda.org/pytask/latex-dependency-scanner/badges/version.svg
-    :target: https://anaconda.org/pytask/latex-dependency-scanner
+.. image:: https://img.shields.io/conda/vn/conda-forge/latex-dependency-scanner.svg
+    :target: https://anaconda.org/conda-forge/latex-dependency-scanner
 
-.. image:: https://anaconda.org/pytask/latex-dependency-scanner/badges/platforms.svg
-    :target: https://anaconda.org/pytask/latex-dependency-scanner
+.. image:: https://img.shields.io/conda/pn/conda-forge/latex-dependency-scanner.svg
+    :target: https://anaconda.org/conda-forge/latex-dependency-scanner
 
 .. image:: https://img.shields.io/pypi/l/latex-dependency-scanner
     :alt: PyPI - License
+    :target: https://pypi.org/project/latex-dependency-scanner
 
-.. image:: https://github.com/pytask-dev/latex-dependency-scanner/workflows/Continuous%20Integration%20Workflow/badge.svg?branch=main
-    :target: https://github.com/pytask-dev/latex-dependency-scanner/actions?query=branch%3Amain
+.. image:: https://img.shields.io/github/workflow/status/pytask-dev/latex-dependency-scanner/Continuous%20Integration%20Workflow/main
+   :target: https://github.com/pytask-dev/latex-dependency-scanner/actions?query=branch%3Amain
 
 .. image:: https://codecov.io/gh/pytask-dev/latex-dependency-scanner/branch/main/graph/badge.svg
     :target: https://codecov.io/gh/pytask-dev/latex-dependency-scanner
@@ -41,7 +42,7 @@ Installation
 
 latex-dependency-scanner is available on `PyPI
 <https://pypi.org/project/latex-dependency-scanner>`_ and `Anaconda.org
-<https://anaconda.org/pytask/latex-dependency-scanner>`_. Install it with
+<https://anaconda.org/conda-forge/latex-dependency-scanner>`_. Install it with
 
 .. code-block:: console
 
@@ -49,8 +50,7 @@ latex-dependency-scanner is available on `PyPI
 
     # or
 
-    $ conda config --add channels conda-forge --add channels pytask
-    $ conda install latex-dependency-scanner
+    $ conda install -c conda-forge latex-dependency-scanner
 
 
 Usage
