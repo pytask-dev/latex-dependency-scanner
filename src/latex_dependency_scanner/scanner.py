@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import List
 from typing import Optional
 from typing import Union
-
+from os.path import splitext
 
 COMMON_TEX_EXTENSIONS = [".ltx", ".tex"]
 """List[str]: List of typical file extensions that contain latex"""
@@ -37,7 +37,9 @@ COMMON_EXTENSIONS_IN_TEX = (
 
 REGEX_TEX = re.compile(
     r"\\(?P<type>usepackage|RequirePackage|include|addbibresource|bibliography|putbib|"
-    r"includegraphics|input|(sub)?import|lstinputlisting)(\[[^\[\]]*\])?"
+    r"includegraphics|input|(sub)?import|lstinputlisting)"
+    r"(<[^<>]*>)?"
+    r"(\[[^\[\]]*\])?"
     r"({(?P<relative_to>[^{}]*)})?{(?P<file>[^{}]*)}",
     re.M,
 )
@@ -130,7 +132,11 @@ def yield_nodes_from_node(
                 elif match.group("type") in ["input", "include", "import", "subimport"]:
                     common_extensions = [".tex"]
                 elif match.group("type") == "includegraphics":
-                    common_extensions = COMMON_GRAPHICS_EXTENSIONS
+                    ext = splitext(path)[-1]
+                    if ext in COMMON_GRAPHICS_EXTENSIONS:
+                        common_extensions = [ext]
+                    else:
+                        common_extensions = COMMON_GRAPHICS_EXTENSIONS
                 elif match.group("type") == "lstinputlistings":
                     common_extensions = [""]
                 else:
