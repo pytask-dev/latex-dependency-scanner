@@ -137,14 +137,14 @@ def test_includegraphics(tmp_path, image_ext, has_extension, file_exists):
 
 @pytest.mark.end_to_end
 def test_includegraphics_with_beamer_overlay(tmp_path):
-    source = """
-    \\documentclass{{beamer}}
-    \\usepackage{{graphicx}}
-    \\begin{{document}}
-    \\begin{{frame}}
-    \\includegraphics<1>{{image.pdf}}
-    \\end{{frame}}
-    \\end{{document}}
+    source = r"""
+    \documentclass{beamer}
+    \usepackage{graphicx}
+    \begin{document}
+    \begin{frame}
+    \includegraphics<1>{image.pdf}
+    \end{frame}
+    \end{document}
     """
     tmp_path.joinpath("document.tex").write_text(textwrap.dedent(source))
 
