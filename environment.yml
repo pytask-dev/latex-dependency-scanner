@@ -1,11 +1,14 @@
-name: latex-dependency-scanner
+name: lds
 
 channels:
   - conda-forge
+  - nodefaults
 
 dependencies:
-  - python=3.8
+  - python >=3.6
   - pip
+  - setuptools-scm
+  - toml
 
   # Testing
   - pytest

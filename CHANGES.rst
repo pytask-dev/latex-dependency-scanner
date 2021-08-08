@@ -14,6 +14,7 @@ in reverse chronological order. Releases follow `semantic versioning
 - :gh:`8` changes ``scan`` such that only one path to an image file is returned if the
   image extension is given and file does not exist. Also, beamer overlays are ignored.
   Thanks to :ghuser:`brettviren`!
+- :gh:`9` replaces versioneer with setuptools-scm.
 
 
 0.0.3 - 2021-03-05

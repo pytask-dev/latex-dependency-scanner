@@ -14,3 +14,7 @@ _generated
 *.egg-info
 
 .pytask.sqlite3
+
+build
+dist
+src/latex_dependency_scanner/_version.py
