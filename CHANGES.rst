@@ -8,6 +8,14 @@ in reverse chronological order. Releases follow `semantic versioning
 <https://anaconda.org/pytask/latex-dependency-scanner>`_.
 
 
+0.0.4 - 2021-08-08
+------------------
+
+- :gh:`8` changes ``scan`` such that only one path to an image file is returned if the
+  image extension is given and file does not exist. Also, beamer overlays are ignored.
+  Thanks to :ghuser:`brettviren`!
+
+
 0.0.3 - 2021-03-05
 ------------------
 
