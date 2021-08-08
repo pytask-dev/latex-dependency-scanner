@@ -8,5 +8,3 @@ exclude tox.ini
 
 include README.rst
 include LICENSE
-include versioneer.py
-include src/latex_dependency_scanner/_version.py
