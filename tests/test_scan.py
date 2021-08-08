@@ -82,65 +82,75 @@ def test_input_or_include_without_extension_and_file(tmp_path, directive):
 @needs_latexmk
 @pytest.mark.end_to_end
 @pytest.mark.parametrize("image_ext", COMMON_GRAPHICS_EXTENSIONS)
-def test_includegraphics(tmp_path, image_ext):
-    """Test includegraphics.
+@pytest.mark.parametrize("has_extension", [True, False])
+@pytest.mark.parametrize("file_exists", [True, False])
+def test_includegraphics(tmp_path, image_ext, has_extension, file_exists):
+    """Test includegraphics with/out extensions and if (not) the image file exists.
 
     Using post-script image files does not work with latexmk, since the .ps-file is
     converted to .pdf every run and latexmk will interpret it as a new file every time.
     Can be resolved by allowing pdflatex as the builder.
 
     """
-    if image_ext == ".ps":
+    if image_ext == ".ps" and file_exists:
         pytest.xfail(
             ".ps does not work with latexmk: https://tex.stackexchange.com/a/67904."
         )
-    if image_ext == ".eps":
+    if image_ext == ".eps" and file_exists:
         pytest.xfail(
             ".eps maybe needs \\graphicspath: https://tex.stackexchange.com/a/98886."
         )
 
-    source = """
-    \\documentclass{article}
-    \\usepackage{graphicx}
-    % \\usepackage{auto-pst-pdf} necessary for .ps-files.
-    \\begin{document}
-    \\includegraphics{image}
-    \\end{document}
+    source = f"""
+    \\documentclass{{article}}
+    \\usepackage{{graphicx}}
+    \\begin{{document}}
+    \\includegraphics{{image{image_ext if has_extension else ''}}}
+    \\end{{document}}
     """
     tmp_path.joinpath("document.tex").write_text(textwrap.dedent(source))
 
     # In case no extension is passed, we pick the pdf.
     _image_ext = image_ext if image_ext else ".pdf"
-    shutil.copy(TEST_RESOURCES / f"image{_image_ext}", tmp_path / f"image{_image_ext}")
 
-    compile_pdf(tmp_path / "document.tex", tmp_path / "bld" / "document.pdf")
+    if file_exists:
+        shutil.copy(
+            TEST_RESOURCES / f"image{_image_ext}", tmp_path / f"image{_image_ext}"
+        )
+        compile_pdf(tmp_path / "document.tex", tmp_path / "bld" / "document.pdf")
 
     nodes = scan(tmp_path.joinpath("document.tex"))
 
-    assert nodes == [
-        tmp_path.joinpath("document.tex"),
-        tmp_path.joinpath(f"image{_image_ext}"),
-    ]
+    expected = [tmp_path.joinpath("document.tex")]
+    if has_extension or file_exists:
+        expected.append(tmp_path.joinpath(f"image{_image_ext}"))
+    else:
+        expected.extend(
+            [
+                (tmp_path / "image").with_suffix(suffix)
+                for suffix in COMMON_GRAPHICS_EXTENSIONS
+            ]
+        )
+
+    assert nodes == expected
 
 
 @pytest.mark.end_to_end
-def test_includegraphics_without_extension_and_non_existent_file(tmp_path):
-    source = """
-    \\documentclass{article}
-    \\usepackage{graphicx}
-    \\begin{document}
-    \\includegraphics{image}
-    \\end{document}
+def test_includegraphics_with_beamer_overlay(tmp_path):
+    source = r"""
+    \documentclass{beamer}
+    \usepackage{graphicx}
+    \begin{document}
+    \begin{frame}
+    \includegraphics<1>{image.pdf}
+    \end{frame}
+    \end{document}
     """
     tmp_path.joinpath("document.tex").write_text(textwrap.dedent(source))
 
     nodes = scan(tmp_path.joinpath("document.tex"))
 
-    expected = [tmp_path / "document.tex"] + [
-        (tmp_path / "image").with_suffix(suffix)
-        for suffix in COMMON_GRAPHICS_EXTENSIONS
-    ]
-    assert nodes == expected
+    assert nodes == [tmp_path.joinpath("document.tex"), tmp_path.joinpath("image.pdf")]
 
 
 @needs_latexmk
