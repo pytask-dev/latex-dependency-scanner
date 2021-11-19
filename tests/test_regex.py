@@ -57,6 +57,14 @@ from latex_dependency_scanner.scanner import REGEX_TEX
             "\\addbibresource{bibfile}",
             {"type": "addbibresource", "file": "bibfile", "relative_to": None},
         ),
+        (
+            "\\glsxtrresourcefile{glsfile}",
+            {"type": "glsxtrresourcefile", "file": "glsfile", "relative_to": None},
+        ),
+        (
+            "\\GlsXtrLoadResources[src={glsfile}]",
+            {"type": "GlsXtrLoadResources", "file": "glsfile", "relative_to": None},
+        ),
     ],
 )
 def test_regex_tex(text, expected):

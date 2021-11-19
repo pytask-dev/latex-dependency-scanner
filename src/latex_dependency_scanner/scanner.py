@@ -37,10 +37,10 @@ COMMON_EXTENSIONS_IN_TEX = (
 
 REGEX_TEX = re.compile(
     r"\\(?P<type>usepackage|RequirePackage|include|addbibresource|bibliography|putbib|"
-    r"includegraphics|input|(sub)?import|lstinputlisting)"
+    r"includegraphics|input|(sub)?import|lstinputlisting|glsxtrresourcefile|GlsXtrLoadResources)"
     r"(<[^<>]*>)?"
     r"(\[[^\[\]]*\])?"
-    r"({(?P<relative_to>[^{}]*)})?{(?P<file>[^{}]*)}",
+    r"({(?P<relative_to>[^{}]*)})?(\[[^\[\]]*src=)?{(?P<file>[^{}]*)}",
     re.M,
 )
 """re.Pattern: The regular expression pattern to extract included files from a LaTeX
