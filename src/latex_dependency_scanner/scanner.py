@@ -9,7 +9,6 @@ from typing import Generator
 COMMON_TEX_EXTENSIONS = [".ltx", ".tex"]
 """List[str]: List of typical file extensions that contain latex"""
 
-
 COMMON_GRAPHICS_EXTENSIONS = [
     # Image formats.
     ".eps",
@@ -31,7 +30,6 @@ COMMON_EXTENSIONS_IN_TEX = [
     *COMMON_TEX_EXTENSIONS,
 ]
 """List[str]: List of typical file extensions included in latex files"""
-
 
 REGEX_TEX = re.compile(
     r"\\(?P<type>usepackage|RequirePackage|include|addbibresource|bibliography|putbib|"
@@ -65,11 +63,25 @@ def scan(paths: Path | list[Path]) -> list[Path]:
     return nodes
 
 
+<<<<<<< HEAD
 def yield_nodes_from_node(  # noqa: C901, PLR0912
     node: Path,
     nodes: list[Path],
     relative_to: Path | None = None,
 ) -> Generator[Path, None, None]:
+||||||| parent of f748069 (extended scan for glossaries)
+def yield_nodes_from_node(
+    node: Path,
+    nodes: List[Path],
+    relative_to: Optional[Path] = None,
+):
+=======
+def yield_nodes_from_node(
+        node: Path,
+        nodes: List[Path],
+        relative_to: Optional[Path] = None,
+):
+>>>>>>> f748069 (extended scan for glossaries)
     r"""Yield nodes from node.
 
     Nodes are references to other files inside a LaTeX document.
@@ -136,6 +148,8 @@ def yield_nodes_from_node(  # noqa: C901, PLR0912
                         common_extensions = [ext]
                     else:
                         common_extensions = COMMON_GRAPHICS_EXTENSIONS
+                elif match.group("type") in ["glsxtrresourcefile", "GlsXtrLoadResources"]:
+                    common_extensions = [".glstex", ".bib"]  # .bib for bib2gls
                 elif match.group("type") == "lstinputlistings":
                     common_extensions = [""]
                 else:
