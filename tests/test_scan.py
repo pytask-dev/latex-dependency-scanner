@@ -390,3 +390,68 @@ def test_biblatex_bibliography_without_extension_and_file(tmp_path):
     nodes = scan(tmp_path / "document.tex")
 
     assert nodes == [tmp_path / "document.tex", tmp_path / "bibliography.bib"]
+
+
+@pytest.mark.end_to_end
+def test_glossaries(tmp_path):
+    """Test document with glossaries"""
+    source = """
+    \\documentclass{article}
+    \\usepackage{glossaries}
+    \\glsxtrresourcefile{symbols}
+    \\GlsXtrLoadResources[src={acronyms}]
+    \\begin{document}
+    \\printunsrtsymbols
+    \\printunsrtglossaries
+    \\end{document}
+    """
+    tmp_path.joinpath("document.tex").write_text(textwrap.dedent(source))
+    shutil.copy(TEST_RESOURCES / "symbols.bib", tmp_path / "symbols.bib")
+    shutil.copy(TEST_RESOURCES / "acronyms.glstex", tmp_path / "acronyms.glstex")
+
+    nodes = scan(tmp_path / "document.tex")
+
+    assert nodes == [tmp_path / "document.tex", tmp_path / "symbols.bib", tmp_path / "acronyms.glstex"]
+
+
+@pytest.mark.end_to_end
+def test_glossaries_both_extensions_present(tmp_path):
+    """Test document with glossaries and present files symbols.bib AND symbols.glstex"""
+    source = """
+    \\documentclass{article}
+    \\usepackage{glossaries}
+    \\glsxtrresourcefile{symbols}
+    \\begin{document}
+    \\printunsrtsymbols
+    \\printunsrtglossaries
+    \\end{document}
+    """
+    tmp_path.joinpath("document.tex").write_text(textwrap.dedent(source))
+    shutil.copy(TEST_RESOURCES / "symbols.bib", tmp_path / "symbols.bib")
+    shutil.copy(TEST_RESOURCES / "acronyms.glstex", tmp_path / "symbols.glstex")
+
+    nodes = scan(tmp_path / "document.tex")
+    print(nodes)
+
+    assert nodes == [tmp_path / "document.tex", tmp_path / "symbols.glstex"]
+
+
+@pytest.mark.end_to_end
+def test_glossaries_without_files(tmp_path):
+    """Test document with glossaries"""
+    source = """
+    \\documentclass{article}
+    \\usepackage{glossaries}
+    \\glsxtrresourcefile{symbols}
+    \\GlsXtrLoadResources[src={acronyms}]
+    \\begin{document}
+    \\printunsrtsymbols
+    \\printunsrtglossaries
+    \\end{document}
+    """
+    tmp_path.joinpath("document.tex").write_text(textwrap.dedent(source))
+
+    nodes = scan(tmp_path / "document.tex")
+
+    assert nodes == [tmp_path / "document.tex", tmp_path / "symbols.glstex", tmp_path / "symbols.bib",
+                     tmp_path / "acronyms.glstex", tmp_path / "acronyms.bib"]

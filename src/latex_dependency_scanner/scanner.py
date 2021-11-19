@@ -9,7 +9,6 @@ from typing import Union
 COMMON_TEX_EXTENSIONS = [".ltx", ".tex"]
 """List[str]: List of typical file extensions that contain latex"""
 
-
 COMMON_GRAPHICS_EXTENSIONS = [
     # Image formats.
     ".eps",
@@ -20,20 +19,18 @@ COMMON_GRAPHICS_EXTENSIONS = [
 ]
 """List[str]: List of typical image extensions contained in LaTeX files."""
 
-
 COMMON_EXTENSIONS_IN_TEX = (
-    [
-        # No extension if the extension is provided.
-        "",
-        # TeX formats.
-        ".bib",
-        ".sty",
-    ]
-    + COMMON_GRAPHICS_EXTENSIONS
-    + COMMON_TEX_EXTENSIONS
+        [
+            # No extension if the extension is provided.
+            "",
+            # TeX formats.
+            ".bib",
+            ".sty",
+        ]
+        + COMMON_GRAPHICS_EXTENSIONS
+        + COMMON_TEX_EXTENSIONS
 )
 """List[str]: List of typical file extensions included in latex files"""
-
 
 REGEX_TEX = re.compile(
     r"\\(?P<type>usepackage|RequirePackage|include|addbibresource|bibliography|putbib|"
@@ -69,9 +66,9 @@ def scan(paths: Union[Path, List[Path]]):
 
 
 def yield_nodes_from_node(
-    node: Path,
-    nodes: List[Path],
-    relative_to: Optional[Path] = None,
+        node: Path,
+        nodes: List[Path],
+        relative_to: Optional[Path] = None,
 ):
     r"""Yield nodes from node.
 
@@ -137,6 +134,8 @@ def yield_nodes_from_node(
                         common_extensions = [ext]
                     else:
                         common_extensions = COMMON_GRAPHICS_EXTENSIONS
+                elif match.group("type") in ["glsxtrresourcefile", "GlsXtrLoadResources"]:
+                    common_extensions = [".glstex", ".bib"]  # .bib for bib2gls
                 elif match.group("type") == "lstinputlistings":
                     common_extensions = [""]
                 else:
