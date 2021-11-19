@@ -411,7 +411,11 @@ def test_glossaries(tmp_path):
 
     nodes = scan(tmp_path / "document.tex")
 
-    assert nodes == [tmp_path / "document.tex", tmp_path / "symbols.bib", tmp_path / "acronyms.glstex"]
+    assert nodes == [
+        tmp_path / "document.tex",
+        tmp_path / "symbols.bib",
+        tmp_path / "acronyms.glstex",
+    ]
 
 
 @pytest.mark.end_to_end
@@ -453,5 +457,10 @@ def test_glossaries_without_files(tmp_path):
 
     nodes = scan(tmp_path / "document.tex")
 
-    assert nodes == [tmp_path / "document.tex", tmp_path / "symbols.glstex", tmp_path / "symbols.bib",
-                     tmp_path / "acronyms.glstex", tmp_path / "acronyms.bib"]
+    assert nodes == [
+        tmp_path / "document.tex",
+        tmp_path / "symbols.glstex",
+        tmp_path / "symbols.bib",
+        tmp_path / "acronyms.glstex",
+        tmp_path / "acronyms.bib",
+    ]
