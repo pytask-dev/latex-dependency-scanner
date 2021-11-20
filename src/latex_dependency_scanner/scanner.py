@@ -6,8 +6,10 @@ import re
 from pathlib import Path
 from typing import Generator
 
+
 COMMON_TEX_EXTENSIONS = [".ltx", ".tex"]
 """List[str]: List of typical file extensions that contain latex"""
+
 
 COMMON_GRAPHICS_EXTENSIONS = [
     # Image formats.
@@ -31,9 +33,11 @@ COMMON_EXTENSIONS_IN_TEX = [
 ]
 """List[str]: List of typical file extensions included in latex files"""
 
+
 REGEX_TEX = re.compile(
-    r"\\(?P<type>usepackage|RequirePackage|include|addbibresource|bibliography|putbib|"
-    r"includegraphics|input|(sub)?import|lstinputlisting|glsxtrresourcefile|GlsXtrLoadResources)"
+    r"\\(?P<type>usepackage|RequirePackage|include|addbibresource|bibliography|putbib"
+    r"|includegraphics|input|(sub)?import|lstinputlisting|glsxtrresourcefile"
+    r"|GlsXtrLoadResources)"
     r"(<[^<>]*>)?"
     r"(\[[^\[\]]*\])?"
     r"({(?P<relative_to>[^{}]*)})?(\[[^\[\]]*src=)?{(?P<file>[^{}]*)}",

@@ -3,6 +3,11 @@
 This is a record of all past latex-dependency-scanner releases and what went into them
 in reverse chronological order. Releases follow [semantic versioning](https://semver.org/) and all releases are available on [PyPI](https://pypi.org/project/latex-dependency-scanner) and [Anaconda.org](https://anaconda.org/pytask/latex-dependency-scanner).
 
+
+## 0.1.4 - 2026-xx-xx
+
+- {pull}`82` adds support for glossaries and bib2gls.
+
 ## 0.1.3 - 2024-xx-xx
 
 - {pull}`31` adds rye.
