@@ -79,7 +79,7 @@ in ``\includegraphics``), all possible candidates are returned.
 PDF
 ~~~
 
-``generate_pdf()`` allows to conveniently generate PDFs with Python. The function is
+``compile_pdf()`` allows to conveniently generate PDFs with Python. The function is
 mainly used for validating test cases.
 
 .. code-block:: python
@@ -87,7 +87,7 @@ mainly used for validating test cases.
     import latex_dependency_scanner as lds
 
 
-    lds.generate_pdf("document.tex", "document.pdf")
+    lds.compile_pdf("document.tex", "document.pdf")
 
 
 Changes

@@ -435,7 +435,6 @@ def test_glossaries_both_extensions_present(tmp_path):
     shutil.copy(TEST_RESOURCES / "acronyms.glstex", tmp_path / "symbols.glstex")
 
     nodes = scan(tmp_path / "document.tex")
-    print(nodes)
 
     assert nodes == [tmp_path / "document.tex", tmp_path / "symbols.glstex"]
 

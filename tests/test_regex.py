@@ -62,7 +62,7 @@ from latex_dependency_scanner.scanner import REGEX_TEX
             {"type": "glsxtrresourcefile", "file": "glsfile", "relative_to": None},
         ),
         (
-            "\\GlsXtrLoadResources[src={glsfile}]",
+            "\\GlsXtrLoadResources[src={glsfile}, selection={all}]",
             {"type": "GlsXtrLoadResources", "file": "glsfile", "relative_to": None},
         ),
     ],
