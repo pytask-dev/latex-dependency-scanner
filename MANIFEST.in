@@ -1,6 +1,8 @@
 prune .conda
 prune tests
 
+recursive-include src py.typed
+
 exclude *.rst
 exclude *.yml
 exclude *.yaml

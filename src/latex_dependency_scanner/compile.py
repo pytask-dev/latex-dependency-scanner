@@ -10,6 +10,7 @@ import os
 import shutil
 import subprocess
 from pathlib import Path
+from subprocess import CompletedProcess
 
 
 DEFAULT_OPTIONS = ["--pdf", "--interaction=nonstopmode", "--synctex=1", "--cd"]
@@ -19,7 +20,7 @@ def compile_pdf(
     latex_document: Path,
     compiled_document: Path | None = None,
     args: list[str] | None = None,
-):
+) -> CompletedProcess[bytes]:
     """Generate a PDF from LaTeX document."""
     if shutil.which("latexmk") is None:
         raise RuntimeError("'latexmk' must be on PATH to compile a LaTeX document.")
@@ -32,7 +33,7 @@ def _prepare_cmd_options(
     latex_document: Path,
     compiled_document: Path | None = None,
     args: list[str] | None = None,
-):
+) -> list[str]:
     """Prepare the command line arguments to compile the LaTeX document.
 
     The output folder needs to be declared as a relative path to the directory where the

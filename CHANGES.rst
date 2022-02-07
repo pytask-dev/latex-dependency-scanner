@@ -13,6 +13,7 @@ in reverse chronological order. Releases follow `semantic versioning
 
 - :gh:`14` skips concurrent CI builds.
 - :gh:`15` deprecates Python 3.6 and enables Python 3.10.
+- :gh:`16` type package and publish types.
 
 
 0.0.4 - 2021-08-08

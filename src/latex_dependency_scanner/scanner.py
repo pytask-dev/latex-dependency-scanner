@@ -4,6 +4,7 @@ from __future__ import annotations
 import re
 from os.path import splitext
 from pathlib import Path
+from typing import Generator
 
 
 COMMON_TEX_EXTENSIONS = [".ltx", ".tex"]
@@ -47,7 +48,7 @@ REGEX_TEX = re.compile(
 document."""
 
 
-def scan(paths: Path | list[Path]):
+def scan(paths: Path | list[Path]) -> list[Path]:
     """Scan the documents provided as paths for included files.
 
     Parameters
@@ -60,7 +61,7 @@ def scan(paths: Path | list[Path]):
         paths = [paths]
     paths = [Path(p) for p in paths]
 
-    nodes = []
+    nodes: list[Path] = []
     for node in paths:
         for node_ in yield_nodes_from_node(node, nodes):
             nodes.append(node_)
@@ -72,7 +73,7 @@ def yield_nodes_from_node(
     node: Path,
     nodes: list[Path],
     relative_to: Path | None = None,
-):
+) -> Generator[Path, None, None]:
     r"""Yield nodes from node.
 
     Nodes are references to other files inside a LaTeX document.
@@ -164,10 +165,10 @@ def yield_nodes_from_node(
                         break
 
                 if not found_some_file:
-                    possible_paths = [
+                    possible_paths = (
                         (relative_to / path).resolve().with_suffix(suffix)
                         if suffix
                         else (relative_to / path).resolve()
                         for suffix in common_extensions
-                    ]
+                    )
                     yield from possible_paths
