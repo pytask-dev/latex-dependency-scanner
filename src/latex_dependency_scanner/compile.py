@@ -10,8 +10,6 @@ import os
 import shutil
 import subprocess
 from pathlib import Path
-from typing import List
-from typing import Optional
 
 
 DEFAULT_OPTIONS = ["--pdf", "--interaction=nonstopmode", "--synctex=1", "--cd"]

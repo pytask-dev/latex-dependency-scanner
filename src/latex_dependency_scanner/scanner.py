@@ -4,9 +4,7 @@ from __future__ import annotations
 import re
 from os.path import splitext
 from pathlib import Path
-from typing import List
-from typing import Optional
-from typing import Union
+
 
 COMMON_TEX_EXTENSIONS = [".ltx", ".tex"]
 """List[str]: List of typical file extensions that contain latex"""
