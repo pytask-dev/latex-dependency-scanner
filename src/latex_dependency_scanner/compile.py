@@ -4,6 +4,8 @@ The function is mainly used in testing to validate the provided examples, but ca
 be used by users to compile their documents.
 
 """
+from __future__ import annotations
+
 import os
 import shutil
 import subprocess

@@ -1,4 +1,6 @@
 """Includes the ability to scan a LaTeX document."""
+from __future__ import annotations
+
 import re
 from os.path import splitext
 from pathlib import Path
