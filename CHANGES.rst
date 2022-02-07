@@ -8,6 +8,12 @@ in reverse chronological order. Releases follow `semantic versioning
 <https://anaconda.org/pytask/latex-dependency-scanner>`_.
 
 
+0.1.1 - 2022-02-08
+------------------
+
+- :gh:`17` fixes the minimum Python version.
+
+
 0.1.0 - 2022-02-07
 ------------------
 
