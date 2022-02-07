@@ -1,4 +1,6 @@
 """The name space for the package."""
+from __future__ import annotations
+
 from latex_dependency_scanner.compile import compile_pdf
 from latex_dependency_scanner.scanner import scan
 
