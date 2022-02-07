@@ -1,10 +1,10 @@
 """Includes the ability to scan a LaTeX document."""
+from __future__ import annotations
+
 import re
 from os.path import splitext
 from pathlib import Path
-from typing import List
-from typing import Optional
-from typing import Union
+
 
 COMMON_TEX_EXTENSIONS = [".ltx", ".tex"]
 """List[str]: List of typical file extensions that contain latex"""
@@ -47,7 +47,7 @@ REGEX_TEX = re.compile(
 document."""
 
 
-def scan(paths: Union[Path, List[Path]]):
+def scan(paths: Path | list[Path]):
     """Scan the documents provided as paths for included files.
 
     Parameters
@@ -70,8 +70,8 @@ def scan(paths: Union[Path, List[Path]]):
 
 def yield_nodes_from_node(
     node: Path,
-    nodes: List[Path],
-    relative_to: Optional[Path] = None,
+    nodes: list[Path],
+    relative_to: Path | None = None,
 ):
     r"""Yield nodes from node.
 
