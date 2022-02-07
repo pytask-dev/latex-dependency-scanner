@@ -4,12 +4,12 @@ The function is mainly used in testing to validate the provided examples, but ca
 be used by users to compile their documents.
 
 """
+from __future__ import annotations
+
 import os
 import shutil
 import subprocess
 from pathlib import Path
-from typing import List
-from typing import Optional
 
 
 DEFAULT_OPTIONS = ["--pdf", "--interaction=nonstopmode", "--synctex=1", "--cd"]
@@ -17,8 +17,8 @@ DEFAULT_OPTIONS = ["--pdf", "--interaction=nonstopmode", "--synctex=1", "--cd"]
 
 def compile_pdf(
     latex_document: Path,
-    compiled_document: Optional[Path] = None,
-    args: Optional[List[str]] = None,
+    compiled_document: Path | None = None,
+    args: list[str] | None = None,
 ):
     """Generate a PDF from LaTeX document."""
     if shutil.which("latexmk") is None:
@@ -30,8 +30,8 @@ def compile_pdf(
 
 def _prepare_cmd_options(
     latex_document: Path,
-    compiled_document: Optional[Path] = None,
-    args: Optional[List[str]] = None,
+    compiled_document: Path | None = None,
+    args: list[str] | None = None,
 ):
     """Prepare the command line arguments to compile the LaTeX document.
 
