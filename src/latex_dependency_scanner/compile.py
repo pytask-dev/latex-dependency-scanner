@@ -19,8 +19,8 @@ DEFAULT_OPTIONS = ["--pdf", "--interaction=nonstopmode", "--synctex=1", "--cd"]
 
 def compile_pdf(
     latex_document: Path,
-    compiled_document: Optional[Path] = None,
-    args: Optional[List[str]] = None,
+    compiled_document: Path | None = None,
+    args: list[str] | None = None,
 ):
     """Generate a PDF from LaTeX document."""
     if shutil.which("latexmk") is None:
@@ -32,8 +32,8 @@ def compile_pdf(
 
 def _prepare_cmd_options(
     latex_document: Path,
-    compiled_document: Optional[Path] = None,
-    args: Optional[List[str]] = None,
+    compiled_document: Path | None = None,
+    args: list[str] | None = None,
 ):
     """Prepare the command line arguments to compile the LaTeX document.
 

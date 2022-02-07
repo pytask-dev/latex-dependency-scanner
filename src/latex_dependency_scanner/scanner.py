@@ -49,7 +49,7 @@ REGEX_TEX = re.compile(
 document."""
 
 
-def scan(paths: Union[Path, List[Path]]):
+def scan(paths: Path | list[Path]):
     """Scan the documents provided as paths for included files.
 
     Parameters
@@ -72,8 +72,8 @@ def scan(paths: Union[Path, List[Path]]):
 
 def yield_nodes_from_node(
     node: Path,
-    nodes: List[Path],
-    relative_to: Optional[Path] = None,
+    nodes: list[Path],
+    relative_to: Path | None = None,
 ):
     r"""Yield nodes from node.
 
