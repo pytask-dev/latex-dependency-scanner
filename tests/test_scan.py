@@ -1,12 +1,15 @@
+from __future__ import annotations
+
 import shutil
 import textwrap
 
 import pytest
-from conftest import needs_latexmk
-from conftest import TEST_RESOURCES
 from latex_dependency_scanner.compile import compile_pdf
 from latex_dependency_scanner.scanner import COMMON_GRAPHICS_EXTENSIONS
 from latex_dependency_scanner.scanner import scan
+
+from tests.conftest import needs_latexmk
+from tests.conftest import TEST_RESOURCES
 
 
 @needs_latexmk
