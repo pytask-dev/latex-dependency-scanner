@@ -8,6 +8,13 @@ in reverse chronological order. Releases follow `semantic versioning
 <https://anaconda.org/pytask/latex-dependency-scanner>`_.
 
 
+0.1.2 - 2022-xx-xx
+------------------
+
+- :gh:`12` adds support for glossaries and glossaries-extra. Thanks to
+  :ghuser:`axtimhaus`!
+
+
 0.1.1 - 2022-02-08
 ------------------
 

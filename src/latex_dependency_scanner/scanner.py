@@ -37,11 +37,12 @@ COMMON_EXTENSIONS_IN_TEX = (
 
 
 REGEX_TEX = re.compile(
-    r"\\(?P<type>usepackage|RequirePackage|include|addbibresource|bibliography|putbib|"
-    r"includegraphics|input|(sub)?import|lstinputlisting)"
+    r"\\(?P<type>usepackage|RequirePackage|include|addbibresource|bibliography|putbib"
+    r"|includegraphics|input|(sub)?import|lstinputlisting|glsxtrresourcefile"
+    r"|GlsXtrLoadResources)"
     r"(<[^<>]*>)?"
     r"(\[[^\[\]]*\])?"
-    r"({(?P<relative_to>[^{}]*)})?{(?P<file>[^{}]*)}",
+    r"({(?P<relative_to>[^{}]*)})?(\[[^\[\]]*src=)?{(?P<file>[^{}]*)}",
     re.M,
 )
 """re.Pattern: The regular expression pattern to extract included files from a LaTeX
@@ -138,6 +139,11 @@ def yield_nodes_from_node(
                         common_extensions = [ext]
                     else:
                         common_extensions = COMMON_GRAPHICS_EXTENSIONS
+                elif match.group("type") in [
+                    "glsxtrresourcefile",
+                    "GlsXtrLoadResources",
+                ]:
+                    common_extensions = [".glstex", ".bib"]  # .bib for bib2gls
                 elif match.group("type") == "lstinputlistings":
                     common_extensions = [""]
                 else:
