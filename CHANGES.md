@@ -5,7 +5,7 @@ in reverse chronological order. Releases follow [semantic versioning](https://se
 
 ## 0.1.2 - 2022-xx-xx
 
-- {pull}`21` updates the readme.
+- {pull}`21` updates the readme and other infrastructure files.
 
 ## 0.1.1 - 2022-02-08
 
