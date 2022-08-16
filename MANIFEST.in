@@ -1,4 +1,3 @@
-prune .conda
 prune tests
 
 recursive-include src py.typed
@@ -8,5 +7,5 @@ exclude *.yml
 exclude *.yaml
 exclude tox.ini
 
-include README.rst
+include README.md
 include LICENSE
