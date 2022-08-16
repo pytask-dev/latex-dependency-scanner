@@ -7,7 +7,6 @@
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/pytask-dev/latex-dependency-scanner/main.svg)](https://results.pre-commit.ci/latest/github/pytask-dev/latex-dependency-scanner/main)
 [![image](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-
 # Features
 
 latex-dependency-scanner is a package to detect all required files to compile a LaTeX
@@ -15,7 +14,10 @@ document.
 
 # Installation
 
-latex-dependency-scanner is available on [PyPI](https://pypi.org/project/latex-dependency-scanner) and [Anaconda.org](https://anaconda.org/conda-forge/latex-dependency-scanner). Install it with
+latex-dependency-scanner is available on
+[PyPI](https://pypi.org/project/latex-dependency-scanner) and
+[Anaconda.org](https://anaconda.org/conda-forge/latex-dependency-scanner). Install it
+with
 
 ```console
 $ pip install latex-dependency-scanner
@@ -31,8 +33,8 @@ The package contains two functions.
 
 ## Scan
 
-`scan()` accepts a path-like object or a list of path-like objects which point to
-`.tex` documents. The return is a collection of paths related to this document.
+`scan()` accepts a path-like object or a list of path-like objects which point to `.tex`
+documents. The return is a collection of paths related to this document.
 
 ```python
 import latex_dependency_scanner as lds
@@ -46,8 +48,8 @@ in `\includegraphics`), all possible candidates are returned.
 
 ## PDF
 
-`compile_pdf()` allows to conveniently generate PDFs with Python. The function is
-mainly used for validating test cases.
+`compile_pdf()` allows to conveniently generate PDFs with Python. The function is mainly
+used for validating test cases.
 
 ```python
 import latex_dependency_scanner as lds

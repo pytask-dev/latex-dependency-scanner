@@ -16,9 +16,6 @@ repos:
     -   id: python-no-eval
     -   id: python-no-log-warn
     -   id: python-use-type-annotations
-    -   id: rst-backticks
-    -   id: rst-directive-colons
-    -   id: rst-inline-touching-normal
     -   id: text-unicode-replacement-char
 -   repo: https://github.com/asottile/pyupgrade
     rev: v2.37.3
@@ -68,10 +65,16 @@ repos:
             pydocstyle,
             Pygments,
         ]
--   repo: https://github.com/PyCQA/doc8
-    rev: v1.0.0
+-   repo: https://github.com/executablebooks/mdformat
+    rev: 0.7.14
     hooks:
-    -   id: doc8
+    -   id: mdformat
+        additional_dependencies: [
+            mdformat-gfm,
+            mdformat-black,
+        ]
+        args: [--wrap, "88"]
+        files: (README\.md)
 -   repo: https://github.com/econchick/interrogate
     rev: 1.5.0
     hooks:
