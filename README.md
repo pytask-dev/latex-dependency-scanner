@@ -58,4 +58,4 @@ lds.compile_pdf("document.tex", "document.pdf")
 
 # Changes
 
-Consult the [release notes](CHANGES.rst) to find out about what is new.
+Consult the [release notes](CHANGES.md) to find out about what is new.
