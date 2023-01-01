@@ -5,6 +5,9 @@ concurrency:
   group: ${{ github.head_ref || github.run_id }}
   cancel-in-progress: true
 
+env:
+  CONDA_EXE: mamba
+
 on:
   push:
     branches:
@@ -34,6 +37,8 @@ jobs:
         with:
           auto-update-conda: true
           python-version: ${{ matrix.python-version }}
+          channels: conda-forge,nodefaults
+          mamba-version: "*"
 
       - name: Install MacOS dependencies.
         if: runner.os == 'macOS'
