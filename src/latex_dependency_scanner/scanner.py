@@ -69,7 +69,7 @@ def scan(paths: Path | list[Path]) -> list[Path]:
     return nodes
 
 
-def yield_nodes_from_node(
+def yield_nodes_from_node(  # noqa: C901
     node: Path,
     nodes: list[Path],
     relative_to: Path | None = None,
