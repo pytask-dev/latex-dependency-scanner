@@ -2,7 +2,7 @@
 [![image](https://img.shields.io/conda/vn/conda-forge/latex-dependency-scanner.svg)](https://anaconda.org/conda-forge/latex-dependency-scanner)
 [![image](https://img.shields.io/conda/pn/conda-forge/latex-dependency-scanner.svg)](https://anaconda.org/conda-forge/latex-dependency-scanner)
 [![PyPI - License](https://img.shields.io/pypi/l/latex-dependency-scanner)](https://pypi.org/project/latex-dependency-scanner)
-[![image](https://img.shields.io/github/workflow/status/pytask-dev/latex-dependency-scanner/main/main)](https://github.com/pytask-dev/latex-dependency-scanner/actions?query=branch%3Amain)
+[![image](https://img.shields.io/github/actions/workflow/status/pytask-dev/latex-dependency-scanner/main.yml?branch=main)](https://github.com/pytask-dev/latex-dependency-scanner/actions?query=branch%3Amain)
 [![image](https://codecov.io/gh/pytask-dev/latex-dependency-scanner/branch/main/graph/badge.svg)](https://app.codecov.io/gh/pytask-dev/latex-dependency-scanner)
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/pytask-dev/latex-dependency-scanner/main.svg)](https://results.pre-commit.ci/latest/github/pytask-dev/latex-dependency-scanner/main)
 [![image](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
