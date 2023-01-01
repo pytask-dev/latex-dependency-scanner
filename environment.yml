@@ -5,7 +5,7 @@ channels:
   - nodefaults
 
 dependencies:
-  - python >=3.6
+  - python >=3.7
   - pip
   - setuptools-scm
   - toml
@@ -14,11 +14,6 @@ dependencies:
   - pytest
 
   # Development
-  - anaconda-client
   - black
-  - conda-build
-  - conda-verify
-  - jupyterlab
   - pre-commit
   - tox-conda
-  - versioneer

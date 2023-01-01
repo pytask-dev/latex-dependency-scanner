@@ -82,11 +82,12 @@ repos:
             types-setuptools
         ]
         pass_filenames: false
-        language_version: "3.9"
 -   repo: https://github.com/mgedmin/check-manifest
     rev: "0.49"
     hooks:
     -   id: check-manifest
+        args: [--no-build-isolation]
+        additional_dependencies: [setuptools-scm, toml]
 -   repo: meta
     hooks:
     -   id: check-hooks-apply
