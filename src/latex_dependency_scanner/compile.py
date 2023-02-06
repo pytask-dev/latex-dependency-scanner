@@ -64,15 +64,11 @@ def _prepare_cmd_options(
     # The path to the output directory must be relative from the location of the source
     # file. See docstring for more information.
     out_relative_to_latex_source = Path(
-        os.path.relpath(compiled_document.parent, latex_document.parent)
+        os.path.relpath(compiled_document.parent, latex_document.parent),
     ).as_posix()
 
     return (
-        [
-            "latexmk",
-            *args,
-        ]
-        + jobname
+        ["latexmk", *args, *jobname]
         + [
             f"--output-directory={out_relative_to_latex_source}",
             latex_document.as_posix(),

@@ -107,13 +107,11 @@ def yield_nodes_from_node(  # noqa: C901
 
     text = node.read_text(encoding="utf-8")
     for match in REGEX_TEX.finditer(text):
-
         if match.group("type") in ["usepackage", "RequirePackage"]:
             continue
 
         for path in match.group("file").split(","):
             if path:
-
                 if match.group("type") == "import":
                     path = relative_to.joinpath(match.group("relative_to"), path)
                 elif match.group("type") == "subimport":
@@ -155,7 +153,7 @@ def yield_nodes_from_node(  # noqa: C901
                         found_some_file = True
                         if path_w_ext.suffix in COMMON_TEX_EXTENSIONS:
                             yield from yield_nodes_from_node(
-                                path_w_ext, nodes, relative_to
+                                path_w_ext, nodes, relative_to,
                             )
                         else:
                             if path_w_ext not in nodes:
