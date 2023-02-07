@@ -52,6 +52,7 @@ extend-ignore = [
     "PD",  # pandas-vet
     "UP",  # pyupgrade is too aggressive for py<3.10
     "COM812",  # trailing comma missing, but black takes care of that
+    "TRY003",  # avoid long exception messages
 ]
 
 

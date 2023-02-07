@@ -67,14 +67,7 @@ def _prepare_cmd_options(
         os.path.relpath(compiled_document.parent, latex_document.parent)
     ).as_posix()
 
-    return (
-        [
-            "latexmk",
-            *args,
-        ]
-        + jobname
-        + [
-            f"--output-directory={out_relative_to_latex_source}",
-            latex_document.as_posix(),
-        ]
-    )
+    return ["latexmk", *args, *jobname] + [
+        f"--output-directory={out_relative_to_latex_source}",
+        latex_document.as_posix(),
+    ]

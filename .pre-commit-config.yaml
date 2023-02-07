@@ -17,11 +17,6 @@ repos:
     -   id: python-no-log-warn
     -   id: python-use-type-annotations
     -   id: text-unicode-replacement-char
--   repo: https://github.com/asottile/pyupgrade
-    rev: v3.3.1
-    hooks:
-    -   id: pyupgrade
-        args: [--py37-plus]
 -   repo: https://github.com/asottile/reorder_python_imports
     rev: v3.9.0
     hooks:
@@ -31,11 +26,6 @@ repos:
     rev: v2.2.0
     hooks:
     -   id: setup-cfg-fmt
--   repo: https://github.com/PyCQA/docformatter
-    rev: v1.6.0.rc1
-    hooks:
-    -   id: docformatter
-        args: [--in-place, --wrap-summaries, "88", --wrap-descriptions, "88", --blank]
 -   repo: https://github.com/psf/black
     rev: 23.1.0
     hooks:
