@@ -38,7 +38,7 @@ jobs:
           auto-update-conda: true
           python-version: ${{ matrix.python-version }}
           channels: conda-forge,nodefaults
-          mamba-version: "*"
+          miniforge-variant: Mambaforge
 
       - name: Install MacOS dependencies.
         if: runner.os == 'macOS'
