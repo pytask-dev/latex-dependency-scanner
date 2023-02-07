@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 import re
-from os.path import splitext
 from pathlib import Path
 from typing import Generator
 
@@ -22,17 +21,15 @@ COMMON_GRAPHICS_EXTENSIONS = [
 """List[str]: List of typical image extensions contained in LaTeX files."""
 
 
-COMMON_EXTENSIONS_IN_TEX = (
-    [
-        # No extension if the extension is provided.
-        "",
-        # TeX formats.
-        ".bib",
-        ".sty",
-    ]
-    + COMMON_GRAPHICS_EXTENSIONS
-    + COMMON_TEX_EXTENSIONS
-)
+COMMON_EXTENSIONS_IN_TEX = [
+    # No extension if the extension is provided.
+    "",
+    # TeX formats.
+    ".bib",
+    ".sty",
+    *COMMON_GRAPHICS_EXTENSIONS,
+    *COMMON_TEX_EXTENSIONS,
+]
 """List[str]: List of typical file extensions included in latex files"""
 
 
@@ -107,13 +104,11 @@ def yield_nodes_from_node(  # noqa: C901
 
     text = node.read_text(encoding="utf-8")
     for match in REGEX_TEX.finditer(text):
-
         if match.group("type") in ["usepackage", "RequirePackage"]:
             continue
 
         for path in match.group("file").split(","):
             if path:
-
                 if match.group("type") == "import":
                     path = relative_to.joinpath(match.group("relative_to"), path)
                 elif match.group("type") == "subimport":
@@ -133,7 +128,7 @@ def yield_nodes_from_node(  # noqa: C901
                 elif match.group("type") in ["input", "include", "import", "subimport"]:
                     common_extensions = [".tex"]
                 elif match.group("type") == "includegraphics":
-                    ext = splitext(path)[-1]
+                    ext = Path(path).suffix
                     if ext in COMMON_GRAPHICS_EXTENSIONS:
                         common_extensions = [ext]
                     else:
