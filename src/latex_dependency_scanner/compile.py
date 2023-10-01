@@ -26,7 +26,7 @@ def compile_pdf(
         raise RuntimeError("'latexmk' must be on PATH to compile a LaTeX document.")
 
     cmd = _prepare_cmd_options(latex_document, compiled_document, args)
-    return subprocess.run(cmd, check=True)
+    return subprocess.run(cmd, check=True)  # noqa: S603
 
 
 def _prepare_cmd_options(
@@ -67,4 +67,10 @@ def _prepare_cmd_options(
         os.path.relpath(compiled_document.parent, latex_document.parent)
     ).as_posix()
 
-    return ["latexmk", *args, *jobname, f"--output-directory={out_relative_to_latex_source}", latex_document.as_posix()]
+    return [
+        "latexmk",
+        *args,
+        *jobname,
+        f"--output-directory={out_relative_to_latex_source}",
+        latex_document.as_posix(),
+    ]
