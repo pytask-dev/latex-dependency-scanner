@@ -60,13 +60,12 @@ def scan(paths: Path | list[Path]) -> list[Path]:
 
     nodes: list[Path] = []
     for node in paths:
-        for node_ in yield_nodes_from_node(node, nodes):
-            nodes.append(node_)
+        nodes.extend(yield_nodes_from_node(node, nodes))
 
     return nodes
 
 
-def yield_nodes_from_node(  # noqa: C901
+def yield_nodes_from_node(  # noqa: C901, PLR0912
     node: Path,
     nodes: list[Path],
     relative_to: Path | None = None,
@@ -110,9 +109,13 @@ def yield_nodes_from_node(  # noqa: C901
         for path in match.group("file").split(","):
             if path:
                 if match.group("type") == "import":
-                    path = relative_to.joinpath(match.group("relative_to"), path)
+                    path = relative_to.joinpath(  # noqa: PLW2901
+                        match.group("relative_to"), path
+                    )
                 elif match.group("type") == "subimport":
-                    path = node.parent.joinpath(match.group("relative_to"), path)
+                    path = node.parent.joinpath(  # noqa: PLW2901
+                        match.group("relative_to"), path
+                    )
                     relative_to = path.parent
                 else:
                     pass
@@ -152,9 +155,8 @@ def yield_nodes_from_node(  # noqa: C901
                             yield from yield_nodes_from_node(
                                 path_w_ext, nodes, relative_to
                             )
-                        else:
-                            if path_w_ext not in nodes:
-                                yield path_w_ext
+                        elif path_w_ext not in nodes:
+                            yield path_w_ext
 
                         # Stop loop, if a file has been found.
                         break
