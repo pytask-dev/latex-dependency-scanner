@@ -3,9 +3,10 @@
 This is a record of all past latex-dependency-scanner releases and what went into them
 in reverse chronological order. Releases follow [semantic versioning](https://semver.org/) and all releases are available on [PyPI](https://pypi.org/project/latex-dependency-scanner) and [Anaconda.org](https://anaconda.org/pytask/latex-dependency-scanner).
 
-## 0.1.2 - 2022-xx-xx
+## 0.1.2 - 2023-10-02
 
 - {pull}`21` updates the readme and other infrastructure files.
+- {pull}`27` modernizes the package and deprecates Python 3.7.
 
 ## 0.1.1 - 2022-02-08
 
