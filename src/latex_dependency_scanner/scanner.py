@@ -1,10 +1,10 @@
 """Includes the ability to scan a LaTeX document."""
+
 from __future__ import annotations
 
 import re
 from pathlib import Path
 from typing import Generator
-
 
 COMMON_TEX_EXTENSIONS = [".ltx", ".tex"]
 """List[str]: List of typical file extensions that contain latex"""
@@ -163,9 +163,11 @@ def yield_nodes_from_node(  # noqa: C901, PLR0912
 
                 if not found_some_file:
                     possible_paths = (
-                        (relative_to / path).resolve().with_suffix(suffix)
-                        if suffix
-                        else (relative_to / path).resolve()
+                        (
+                            (relative_to / path).resolve().with_suffix(suffix)
+                            if suffix
+                            else (relative_to / path).resolve()
+                        )
                         for suffix in common_extensions
                     )
                     yield from possible_paths

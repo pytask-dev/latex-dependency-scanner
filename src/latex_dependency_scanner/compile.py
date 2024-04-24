@@ -1,9 +1,10 @@
-"""This module provides the means to compile a LaTeX document to a desired location.
+"""Provides the means to compile a LaTeX document to a desired location.
 
 The function is mainly used in testing to validate the provided examples, but can also
 be used by users to compile their documents.
 
 """
+
 from __future__ import annotations
 
 import os
@@ -11,7 +12,6 @@ import shutil
 import subprocess
 from pathlib import Path
 from subprocess import CompletedProcess
-
 
 DEFAULT_OPTIONS = ["--pdf", "--interaction=nonstopmode", "--synctex=1", "--cd"]
 
@@ -23,7 +23,8 @@ def compile_pdf(
 ) -> CompletedProcess[bytes]:
     """Generate a PDF from LaTeX document."""
     if shutil.which("latexmk") is None:
-        raise RuntimeError("'latexmk' must be on PATH to compile a LaTeX document.")
+        msg = "'latexmk' must be on PATH to compile a LaTeX document."
+        raise RuntimeError(msg)
 
     cmd = _prepare_cmd_options(latex_document, compiled_document, args)
     return subprocess.run(cmd, check=True)  # noqa: S603
