@@ -6,7 +6,6 @@ import re
 from pathlib import Path
 from typing import Generator
 
-
 COMMON_TEX_EXTENSIONS = [".ltx", ".tex"]
 """List[str]: List of typical file extensions that contain latex"""
 

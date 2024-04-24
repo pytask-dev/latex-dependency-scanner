@@ -8,8 +8,8 @@ from latex_dependency_scanner.compile import compile_pdf
 from latex_dependency_scanner.scanner import COMMON_GRAPHICS_EXTENSIONS
 from latex_dependency_scanner.scanner import scan
 
-from tests.conftest import needs_latexmk
 from tests.conftest import TEST_RESOURCES
+from tests.conftest import needs_latexmk
 
 
 @needs_latexmk
