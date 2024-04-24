@@ -18,3 +18,5 @@ _generated
 build
 dist
 src/latex_dependency_scanner/_version.py
+.ruff_cache
+.pytest_cache
