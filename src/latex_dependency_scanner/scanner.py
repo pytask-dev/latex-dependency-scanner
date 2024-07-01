@@ -39,7 +39,7 @@ REGEX_TEX = re.compile(
     r"(<[^<>]*>)?"
     r"(\[[^\[\]]*\])?"
     r"({(?P<relative_to>[^{}]*)})?{(?P<file>[^{}]*)}",
-    re.M,
+    re.MULTILINE,
 )
 """re.Pattern: The regular expression pattern to extract included files from a LaTeX
 document."""
