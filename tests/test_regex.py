@@ -3,10 +3,11 @@
 from __future__ import annotations
 
 import pytest
+
 from latex_dependency_scanner.scanner import REGEX_TEX
 
 
-@pytest.mark.unit()
+@pytest.mark.unit
 @pytest.mark.parametrize(
     ("text", "expected"),
     [
