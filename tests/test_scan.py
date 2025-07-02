@@ -4,16 +4,16 @@ import shutil
 import textwrap
 
 import pytest
+
 from latex_dependency_scanner.compile import compile_pdf
 from latex_dependency_scanner.scanner import COMMON_GRAPHICS_EXTENSIONS
 from latex_dependency_scanner.scanner import scan
-
 from tests.conftest import TEST_RESOURCES
 from tests.conftest import needs_latexmk
 
 
 @needs_latexmk
-@pytest.mark.end_to_end()
+@pytest.mark.end_to_end
 def test_document_without_inclusions(tmp_path):
     source = r"""
     \documentclass{article}
@@ -31,7 +31,7 @@ def test_document_without_inclusions(tmp_path):
 
 
 @needs_latexmk
-@pytest.mark.end_to_end()
+@pytest.mark.end_to_end
 @pytest.mark.parametrize("directive", ["include", "input"])
 def test_input_or_include(tmp_path, directive):
     source = f"""
@@ -61,7 +61,7 @@ def test_input_or_include(tmp_path, directive):
     ]
 
 
-@pytest.mark.end_to_end()
+@pytest.mark.end_to_end
 @pytest.mark.parametrize("directive", ["include", "input"])
 def test_input_or_include_without_extension_and_file(tmp_path, directive):
     source = f"""
@@ -83,7 +83,7 @@ def test_input_or_include_without_extension_and_file(tmp_path, directive):
 
 
 @needs_latexmk
-@pytest.mark.end_to_end()
+@pytest.mark.end_to_end
 @pytest.mark.parametrize("image_ext", COMMON_GRAPHICS_EXTENSIONS)
 @pytest.mark.parametrize("has_extension", [True, False])
 @pytest.mark.parametrize("file_exists", [True, False])
@@ -108,7 +108,7 @@ def test_includegraphics(tmp_path, image_ext, has_extension, file_exists):
     \\documentclass{{article}}
     \\usepackage{{graphicx}}
     \\begin{{document}}
-    \\includegraphics{{image{image_ext if has_extension else ''}}}
+    \\includegraphics{{image{image_ext if has_extension else ""}}}
     \\end{{document}}
     """
     tmp_path.joinpath("document.tex").write_text(textwrap.dedent(source))
@@ -138,7 +138,7 @@ def test_includegraphics(tmp_path, image_ext, has_extension, file_exists):
     assert nodes == expected
 
 
-@pytest.mark.end_to_end()
+@pytest.mark.end_to_end
 def test_includegraphics_with_beamer_overlay(tmp_path):
     source = r"""
     \documentclass{beamer}
@@ -157,7 +157,7 @@ def test_includegraphics_with_beamer_overlay(tmp_path):
 
 
 @needs_latexmk
-@pytest.mark.end_to_end()
+@pytest.mark.end_to_end
 def test_import(tmp_path):
     source = """
     \\documentclass{article}
@@ -185,7 +185,7 @@ def test_import(tmp_path):
     ]
 
 
-@pytest.mark.end_to_end()
+@pytest.mark.end_to_end
 def test_import_without_extension_and_file(tmp_path):
     source = """
     \\documentclass{article}
@@ -205,7 +205,7 @@ def test_import_without_extension_and_file(tmp_path):
 
 
 @needs_latexmk
-@pytest.mark.end_to_end()
+@pytest.mark.end_to_end
 def test_sub_import(tmp_path):
     source = """
     \\documentclass{article}
@@ -235,7 +235,7 @@ def test_sub_import(tmp_path):
     ]
 
 
-@pytest.mark.end_to_end()
+@pytest.mark.end_to_end
 def test_sub_import_without_extension_and_file(tmp_path):
     source = """
     \\documentclass{article}
@@ -261,7 +261,7 @@ def test_sub_import_without_extension_and_file(tmp_path):
 
 
 @needs_latexmk
-@pytest.mark.end_to_end()
+@pytest.mark.end_to_end
 def test_mixed_import_and_subimport(tmp_path):
     """Test document with mixed import and subimport directives.
 
@@ -314,7 +314,7 @@ def test_mixed_import_and_subimport(tmp_path):
 
 
 @needs_latexmk
-@pytest.mark.end_to_end()
+@pytest.mark.end_to_end
 def test_natbib_bibliography(tmp_path):
     source = """
     \\documentclass{article}
@@ -335,7 +335,7 @@ def test_natbib_bibliography(tmp_path):
     assert nodes == [tmp_path / "document.tex", tmp_path / "bibliography.bib"]
 
 
-@pytest.mark.end_to_end()
+@pytest.mark.end_to_end
 def test_natbib_bibliography_without_extension_and_file(tmp_path):
     source = """
     \\documentclass{article}
@@ -354,7 +354,7 @@ def test_natbib_bibliography_without_extension_and_file(tmp_path):
 
 
 @needs_latexmk
-@pytest.mark.end_to_end()
+@pytest.mark.end_to_end
 def test_biblatex_bibliography(tmp_path):
     """Test document with biblatex bibliography."""
     source = """
@@ -376,7 +376,7 @@ def test_biblatex_bibliography(tmp_path):
     assert nodes == [tmp_path / "document.tex", tmp_path / "bibliography.bib"]
 
 
-@pytest.mark.end_to_end()
+@pytest.mark.end_to_end
 def test_biblatex_bibliography_without_extension_and_file(tmp_path):
     """Test document without biblatex bibliography file and extension."""
     source = """
