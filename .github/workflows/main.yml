@@ -69,7 +69,7 @@ jobs:
         run: tox -e test -- src tests -m "unit or (not integration and not end_to_end)" --cov=./ --cov-report=xml
 
       - name: Upload unit test coverage reports to Codecov with GitHub Action
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
           flags: unit
 
@@ -78,6 +78,6 @@ jobs:
         run: tox -e test -- src tests -m end_to_end --cov=./ --cov-report=xml
 
       - name: Upload end_to_end test coverage reports to Codecov with GitHub Action
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
           flags: end_to_end
