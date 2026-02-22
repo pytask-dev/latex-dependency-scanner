@@ -6,13 +6,9 @@ install:
 test *FLAGS:
     uv run --group test pytest {{FLAGS}}
 
-# Run unit tests and doctests with coverage.
-test-unit *FLAGS:
-    uv run --group test pytest src tests -m "unit or (not integration and not end_to_end)" --cov=./ --cov-report=xml {{FLAGS}}
-
-# Run end-to-end tests with coverage.
-test-end-to-end *FLAGS:
-    uv run --group test pytest src tests -m end_to_end --cov=./ --cov-report=xml {{FLAGS}}
+# Run tests with coverage.
+test-cov *FLAGS:
+    uv run --group test pytest --cov=./ --cov-report=xml {{FLAGS}}
 
 # Run type checking.
 typing:
@@ -23,4 +19,4 @@ lint:
     uvx pre-commit run -a
 
 # Run all checks.
-check: lint typing test-unit test-end-to-end
+check: lint typing test-cov

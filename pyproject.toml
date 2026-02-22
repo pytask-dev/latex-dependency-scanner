@@ -64,11 +64,6 @@ lint.pydocstyle.convention = "numpy"
 [tool.pytest]
 ini_options.testpaths = [ "src", "tests" ]
 ini_options.norecursedirs = [ ".idea", ".tox" ]
-ini_options.markers = [
-  "unit: Marks unit tests.",
-  "integration: Marks integration tests.",
-  "end_to_end: Marks end-to-end tests.",
-]
 
 [tool.ty]
 overrides = [

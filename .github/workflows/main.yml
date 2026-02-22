@@ -62,22 +62,12 @@ jobs:
         shell: bash -l {0}
         run: tlmgr install import epstopdf biblatex biber
 
-      # Unit and end-to-end tests.
+      # Tests.
 
-      - name: Run unit tests and doctests.
+      - name: Run tests and doctests.
         shell: bash -l {0}
-        run: just test-unit
+        run: just test-cov
 
-      - name: Upload unit test coverage reports to Codecov with GitHub Action
+      - name: Upload test coverage reports to Codecov with GitHub Action
+        if: runner.os == 'Linux' && matrix.python-version == '3.8'
         uses: codecov/codecov-action@v5
-        with:
-          flags: unit
-
-      - name: Run end-to-end tests.
-        shell: bash -l {0}
-        run: just test-end-to-end
-
-      - name: Upload end_to_end test coverage reports to Codecov with GitHub Action
-        uses: codecov/codecov-action@v5
-        with:
-          flags: end_to_end

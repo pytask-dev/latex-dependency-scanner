@@ -63,8 +63,7 @@ Install dependencies and run checks with `uv` and `just`.
 ```console
 $ uv sync --all-groups
 $ just typing
-$ just test-unit
-$ just test-end-to-end
+$ just test-cov
 $ just lint
 ```
 

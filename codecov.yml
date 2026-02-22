@@ -9,14 +9,6 @@ coverage:
     project:
       default:
         threshold: 1%
-      unit:
-        threshold: 1%
-        flags:
-          - unit
-      end_to_end:
-        threshold: 1%
-        flags:
-          - end_to_end
 
 ignore:
   - "setup.py"
