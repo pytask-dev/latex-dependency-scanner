@@ -5,10 +5,6 @@ requires = [ "hatch-vcs", "hatchling" ]
 [project]
 name = "latex-dependency-scanner"
 description = "Scan LaTeX documents for their dependencies."
-readme.content-type = "text/markdown"
-readme.file = "README.md"
-license.text = "MIT"
-authors = [ { name = "Tobias Raabe", email = "raabe@posteo.de" } ]
 requires-python = ">=3.8"
 classifiers = [
   "Development Status :: 3 - Alpha",
@@ -24,11 +20,20 @@ classifiers = [
   "Programming Language :: Python :: 3.14",
 ]
 dynamic = [ "version" ]
-urls.Changelog = "https://github.com/pytask-dev/latex-dependency-scanner/blob/main/CHANGES.md"
-urls.Documentation = "https://github.com/pytask-dev/latex-dependency-scanner"
-urls.Github = "https://github.com/pytask-dev/latex-dependency-scanner"
-urls.Homepage = "https://github.com/pytask-dev/latex-dependency-scanner"
-urls.Tracker = "https://github.com/pytask-dev/latex-dependency-scanner/issues"
+[[project.authors]]
+name = "Tobias Raabe"
+email = "raabe@posteo.de"
+[project.license]
+text = "MIT"
+[project.readme]
+content-type = "text/markdown"
+file = "README.md"
+[project.urls]
+Changelog = "https://github.com/pytask-dev/latex-dependency-scanner/blob/main/CHANGES.md"
+Documentation = "https://github.com/pytask-dev/latex-dependency-scanner"
+Github = "https://github.com/pytask-dev/latex-dependency-scanner"
+Homepage = "https://github.com/pytask-dev/latex-dependency-scanner"
+Tracker = "https://github.com/pytask-dev/latex-dependency-scanner/issues"
 
 [dependency-groups]
 test = [
@@ -40,35 +45,45 @@ typing = [
 ]
 
 [tool.hatch]
-build.hooks.vcs.version-file = "src/latex_dependency_scanner/_version.py"
-build.targets.sdist.exclude = [ "tests" ]
-build.targets.sdist.only-packages = true
-build.targets.wheel.exclude = [ "tests" ]
-build.targets.wheel.only-packages = true
-metadata.allow-direct-references = true
-version.source = "vcs"
+[tool.hatch.build]
+hooks.vcs.version-file = "src/latex_dependency_scanner/_version.py"
+targets.sdist.exclude = [ "tests" ]
+targets.sdist.only-packages = true
+targets.wheel.exclude = [ "tests" ]
+targets.wheel.only-packages = true
+[tool.hatch.metadata]
+allow-direct-references = true
+[tool.hatch.version]
+source = "vcs"
 
 [tool.ruff]
 target-version = "py38"
 fix = true
 unsafe-fixes = true
-lint.select = [ "ALL" ]
-lint.extend-ignore = [
+[tool.ruff.lint]
+select = [ "ALL" ]
+extend-ignore = [
   "COM812", # Comply with ruff-format
   "ISC001", # Comply with ruff-format
 ]
-lint.per-file-ignores."tests/*" = [ "ANN", "D", "S101" ]
-lint.isort.force-single-line = true
-lint.pydocstyle.convention = "numpy"
+per-file-ignores."tests/*" = [ "ANN", "D", "S101" ]
+isort.force-single-line = true
+pydocstyle.convention = "numpy"
+
+[tool.pyproject-fmt]
+table_format = "long"
 
 [tool.pytest]
-ini_options.testpaths = [ "src", "tests" ]
-ini_options.norecursedirs = [ ".idea", ".tox" ]
+[tool.pytest.ini_options]
+testpaths = [ "src", "tests" ]
+norecursedirs = [ ".idea", ".tox" ]
 
 [tool.ty]
 overrides = [
   { include = [ "src/**/_version.py" ], rules = { invalid-type-form = "ignore" } },
   { include = [ "src/**/__init__.py" ], rules = { unused-ignore-comment = "ignore" } },
 ]
-rules.unused-ignore-comment = "error"
-terminal.error-on-warning = true
+[tool.ty.rules]
+unused-ignore-comment = "error"
+[tool.ty.terminal]
+error-on-warning = true
