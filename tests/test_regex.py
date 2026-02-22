@@ -69,4 +69,5 @@ def test_regex_tex(text, expected):
     if expected is None:
         assert match is expected
     else:
+        assert match is not None
         assert match.groupdict() == expected

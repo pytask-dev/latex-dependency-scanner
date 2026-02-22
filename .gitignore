@@ -6,6 +6,7 @@ coverage.*
 .idea
 .ipynb_checkpoints
 .tox
+.venv
 .vscode
 _build
 __pycache__

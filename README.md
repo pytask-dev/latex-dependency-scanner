@@ -56,6 +56,18 @@ import latex_dependency_scanner as lds
 lds.compile_pdf("document.tex", "document.pdf")
 ```
 
+# Development
+
+Install dependencies and run checks with `uv` and `just`.
+
+```console
+$ uv sync --all-groups
+$ just typing
+$ just test-unit
+$ just test-end-to-end
+$ just lint
+```
+
 # Changes
 
 Consult the [release notes](CHANGES.md) to find out about what is new.

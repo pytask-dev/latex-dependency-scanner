@@ -1,99 +1,79 @@
 [build-system]
-requires = ["hatchling", "hatch-vcs"]
 build-backend = "hatchling.build"
+requires = [ "hatch-vcs", "hatchling" ]
 
 [project]
-name = "latex_dependency_scanner"
+name = "latex-dependency-scanner"
 description = "Scan LaTeX documents for their dependencies."
-classifiers = [
-    "Development Status :: 3 - Alpha",
-    "License :: OSI Approved :: MIT License",
-    "Operating System :: OS Independent",
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3 :: Only",
-]
+readme.content-type = "text/markdown"
+readme.file = "README.md"
+license.text = "MIT"
+authors = [ { name = "Tobias Raabe", email = "raabe@posteo.de" } ]
 requires-python = ">=3.8"
-dynamic = ["version"]
-
-[[project.authors]]
-name = "Tobias Raabe"
-email = "raabe@posteo.de"
-
-[project.readme]
-file = "README.md"
-content-type = "text/markdown"
-
-[project.license]
-text = "MIT"
-
-[project.urls]
-Homepage = "https://github.com/pytask-dev/latex-dependency-scanner"
-Changelog = "https://github.com/pytask-dev/latex-dependency-scanner/blob/main/CHANGES.md"
-Documentation = "https://github.com/pytask-dev/latex-dependency-scanner"
-Github = "https://github.com/pytask-dev/latex-dependency-scanner"
-Tracker = "https://github.com/pytask-dev/latex-dependency-scanner/issues"
-
-[project.optional-dependencies]
-typing = [
-    "mypy>=1.10.0",
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
 ]
+dynamic = [ "version" ]
+urls.Changelog = "https://github.com/pytask-dev/latex-dependency-scanner/blob/main/CHANGES.md"
+urls.Documentation = "https://github.com/pytask-dev/latex-dependency-scanner"
+urls.Github = "https://github.com/pytask-dev/latex-dependency-scanner"
+urls.Homepage = "https://github.com/pytask-dev/latex-dependency-scanner"
+urls.Tracker = "https://github.com/pytask-dev/latex-dependency-scanner/issues"
+
+[dependency-groups]
 test = [
-    "pytest>=8.1.1",
-    "pytest-cov>=5.0.0",
+  "pytest>=8.1.1",
+  "pytest-cov>=5",
+]
+typing = [
+  "ty>=0.0.8",
 ]
 
-[tool.rye]
-managed = true
-
-[tool.hatch.build.hooks.vcs]
-version-file = "src/latex_dependency_scanner/_version.py"
-
-[tool.hatch.build.targets.sdist]
-exclude = ["tests"]
-only-packages = true
-
-[tool.hatch.build.targets.wheel]
-exclude = ["tests"]
-only-packages = true
-
-[tool.hatch.version]
-source = "vcs"
-
-[tool.hatch.metadata]
-allow-direct-references = true
-
-[tool.mypy]
-files = ["src", "tests"]
-check_untyped_defs = true
-disallow_any_generics = true
-disallow_incomplete_defs = true
-disallow_untyped_defs = true
-no_implicit_optional = true
-warn_redundant_casts = true
-warn_unused_ignores = true
-
-[[tool.mypy.overrides]]
-module = "tests.*"
-disallow_untyped_defs = false
-ignore_errors = true
+[tool.hatch]
+build.hooks.vcs.version-file = "src/latex_dependency_scanner/_version.py"
+build.targets.sdist.exclude = [ "tests" ]
+build.targets.sdist.only-packages = true
+build.targets.wheel.exclude = [ "tests" ]
+build.targets.wheel.only-packages = true
+metadata.allow-direct-references = true
+version.source = "vcs"
 
 [tool.ruff]
 target-version = "py38"
 fix = true
 unsafe-fixes = true
-
-[tool.ruff.lint]
-extend-ignore = [
-    "COM812", # Comply with ruff-format
-    "ISC001", # Comply with ruff-format
+lint.select = [ "ALL" ]
+lint.extend-ignore = [
+  "COM812", # Comply with ruff-format
+  "ISC001", # Comply with ruff-format
 ]
-select = ["ALL"]
+lint.per-file-ignores."tests/*" = [ "ANN", "D", "S101" ]
+lint.isort.force-single-line = true
+lint.pydocstyle.convention = "numpy"
 
-[tool.ruff.lint.per-file-ignores]
-"tests/*" = ["ANN", "D", "S101"]
+[tool.pytest]
+ini_options.testpaths = [ "src", "tests" ]
+ini_options.norecursedirs = [ ".idea", ".tox" ]
+ini_options.markers = [
+  "unit: Marks unit tests.",
+  "integration: Marks integration tests.",
+  "end_to_end: Marks end-to-end tests.",
+]
 
-[tool.ruff.lint.isort]
-force-single-line = true
-
-[tool.ruff.lint.pydocstyle]
-convention = "numpy"
+[tool.ty]
+overrides = [
+  { include = [ "src/**/_version.py" ], rules = { invalid-type-form = "ignore" } },
+  { include = [ "src/**/__init__.py" ], rules = { unused-ignore-comment = "ignore" } },
+]
+rules.unused-ignore-comment = "error"
+terminal.error-on-warning = true
