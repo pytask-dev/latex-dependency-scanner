@@ -112,7 +112,7 @@ def test_includegraphics(tmp_path, image_ext, has_extension, file_exists):
     tmp_path.joinpath("document.tex").write_text(textwrap.dedent(source))
 
     # In case no extension is passed, we pick the pdf.
-    _image_ext = image_ext if image_ext else ".pdf"
+    _image_ext = image_ext or ".pdf"
 
     if file_exists:
         shutil.copy(
