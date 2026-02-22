@@ -7,7 +7,6 @@ import pytest
 from latex_dependency_scanner.scanner import REGEX_TEX
 
 
-@pytest.mark.unit
 @pytest.mark.parametrize(
     ("text", "expected"),
     [
@@ -69,4 +68,5 @@ def test_regex_tex(text, expected):
     if expected is None:
         assert match is expected
     else:
+        assert match is not None
         assert match.groupdict() == expected
