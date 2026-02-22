@@ -39,7 +39,6 @@ documents. The return is a collection of paths related to this document.
 ```python
 import latex_dependency_scanner as lds
 
-
 paths = lds.scan("document.tex")
 ```
 
@@ -53,7 +52,6 @@ used for validating test cases.
 
 ```python
 import latex_dependency_scanner as lds
-
 
 lds.compile_pdf("document.tex", "document.pdf")
 ```
