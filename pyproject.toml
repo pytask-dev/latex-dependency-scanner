@@ -73,11 +73,6 @@ pydocstyle.convention = "numpy"
 [tool.pyproject-fmt]
 table_format = "long"
 
-[tool.pytest]
-[tool.pytest.ini_options]
-testpaths = [ "src", "tests" ]
-norecursedirs = [ ".idea", ".tox" ]
-
 [tool.ty]
 overrides = [
   { include = [ "src/**/_version.py" ], rules = { invalid-type-form = "ignore" } },
@@ -87,3 +82,8 @@ overrides = [
 unused-ignore-comment = "error"
 [tool.ty.terminal]
 error-on-warning = true
+
+[tool.pytest]
+[tool.pytest.ini_options]
+testpaths = [ "src", "tests" ]
+norecursedirs = [ ".idea", ".tox" ]
