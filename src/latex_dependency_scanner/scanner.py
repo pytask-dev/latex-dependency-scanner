@@ -141,7 +141,7 @@ def yield_nodes_from_node(  # noqa: C901, PLR0912
                     "glsxtrresourcefile",
                     "GlsXtrLoadResources",
                 ]:
-                    common_extensions = [".glstex", ".bib"]  # .bib for bib2gls
+                    common_extensions = [".bib", ".glstex"]  # .bib for bib2gls
                 elif match.group("type") == "lstinputlistings":
                     common_extensions = [""]
                 else:
