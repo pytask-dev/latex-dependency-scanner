@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from collections.abc import Generator
 
-COMMON_TEX_EXTENSIONS = [".ltx", ".tex"]
+COMMON_TEX_EXTENSIONS = [".cls", ".ltx", ".sty", ".tex"]
 """List[str]: List of typical file extensions that contain latex"""
 
 
@@ -38,8 +38,9 @@ COMMON_EXTENSIONS_IN_TEX = [
 
 
 REGEX_TEX = re.compile(
-    r"\\(?P<type>usepackage|RequirePackage|include|addbibresource|bibliography|putbib|"
-    r"includegraphics|input|(sub)?import|lstinputlisting)"
+    r"\\(?P<type>documentclass|usepackage|RequirePackage|LoadClassWithOptions|"
+    r"LoadClass|include|addbibresource|bibliography|putbib|includegraphics|input|"
+    r"(sub)?import|lstinputlisting)"
     r"(<[^<>]*>)?"
     r"(\[[^\[\]]*\])?"
     r"({(?P<relative_to>[^{}]*)})?{(?P<file>[^{}]*)}",
@@ -107,9 +108,6 @@ def yield_nodes_from_node(  # noqa: C901, PLR0912
 
     text = node.read_text(encoding="utf-8")
     for match in REGEX_TEX.finditer(text):
-        if match.group("type") in ["usepackage", "RequirePackage"]:
-            continue
-
         for path in match.group("file").split(","):
             if path:
                 if match.group("type") == "import":
@@ -124,7 +122,20 @@ def yield_nodes_from_node(  # noqa: C901, PLR0912
                 else:
                     pass
 
-                if match.group("type") in ["usepackage", "RequirePackage"]:
+                is_local_tex_dependency = match.group("type") in [
+                    "documentclass",
+                    "LoadClass",
+                    "LoadClassWithOptions",
+                    "RequirePackage",
+                    "usepackage",
+                ]
+                if match.group("type") in [
+                    "documentclass",
+                    "LoadClass",
+                    "LoadClassWithOptions",
+                ]:
+                    common_extensions = [".cls"]
+                elif match.group("type") in ["usepackage", "RequirePackage"]:
                     common_extensions = [".sty"]
                 elif match.group("type") in [
                     "addbibresource",
@@ -165,7 +176,7 @@ def yield_nodes_from_node(  # noqa: C901, PLR0912
                         # Stop loop, if a file has been found.
                         break
 
-                if not found_some_file:
+                if not found_some_file and not is_local_tex_dependency:
                     possible_paths = (
                         (
                             (relative_to / path).resolve().with_suffix(suffix)
