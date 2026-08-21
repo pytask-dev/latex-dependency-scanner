@@ -81,6 +81,32 @@ def test_input_or_include_without_extension_and_file(tmp_path, directive):
     ]
 
 
+def test_scan_handles_cyclic_inputs(tmp_path):
+    tmp_path.joinpath("first.tex").write_text(r"\input{second}")
+    tmp_path.joinpath("second.tex").write_text(r"\input{first}")
+
+    nodes = scan(tmp_path / "first.tex")
+
+    assert nodes == [tmp_path / "first.tex", tmp_path / "second.tex"]
+
+
+def test_scan_deduplicates_dependencies(tmp_path):
+    source = "\n".join(
+        [r"\input{included}", r"\input{included}", r"\input{missing}"] * 2
+    )
+    document = tmp_path / "document.tex"
+    document.write_text(source)
+    tmp_path.joinpath("included.tex").write_text("Included content.")
+
+    nodes = scan([document, document])
+
+    assert nodes == [
+        document,
+        tmp_path / "included.tex",
+        tmp_path / "missing.tex",
+    ]
+
+
 @needs_latexmk
 @pytest.mark.parametrize("image_ext", COMMON_GRAPHICS_EXTENSIONS)
 @pytest.mark.parametrize("has_extension", [True, False])

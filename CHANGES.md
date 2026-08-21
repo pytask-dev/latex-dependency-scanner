@@ -6,6 +6,7 @@ in reverse chronological order. Releases follow [semantic versioning](https://se
 ## 0.1.3 - 2026-xx-xx
 
 - {pull}`87` adds project-local LaTeX classes and packages to scan results.
+- {pull}`85` prevents cyclic scans and removes duplicate dependencies from results.
 - {pull}`83` adds `.jpg` extension for graphics.
 - {pull}`84` updates the package and CI to support Python 3.10 through 3.14.
 - {pull}`31` adds rye.
