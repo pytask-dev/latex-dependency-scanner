@@ -63,15 +63,16 @@ def scan(paths: Path | list[Path]) -> list[Path]:
     paths = [Path(p) for p in paths]
 
     nodes: list[Path] = []
+    visited: set[Path] = set()
     for node in paths:
-        nodes.extend(yield_nodes_from_node(node, nodes))
+        nodes.extend(yield_nodes_from_node(node, visited))
 
     return nodes
 
 
 def yield_nodes_from_node(  # noqa: C901, PLR0912
     node: Path,
-    nodes: list[Path],
+    visited: set[Path],
     relative_to: Path | None = None,
 ) -> Generator[Path, None, None]:
     r"""Yield nodes from node.
@@ -100,8 +101,12 @@ def yield_nodes_from_node(  # noqa: C901, PLR0912
     - If a document imports a file with ``\subimport{}{}``
 
     """
-    if node not in nodes:
-        yield node
+    resolved_node = node.resolve()
+    if resolved_node in visited:
+        return
+
+    visited.add(resolved_node)
+    yield node
 
     relative_to = node.parent if relative_to is None else relative_to
 
@@ -157,21 +162,24 @@ def yield_nodes_from_node(  # noqa: C901, PLR0912
                         found_some_file = True
                         if path_w_ext.suffix in COMMON_TEX_EXTENSIONS:
                             yield from yield_nodes_from_node(
-                                path_w_ext, nodes, relative_to
+                                path_w_ext, visited, relative_to
                             )
-                        elif path_w_ext not in nodes:
+                        elif path_w_ext not in visited:
+                            visited.add(path_w_ext)
                             yield path_w_ext
 
                         # Stop loop, if a file has been found.
                         break
 
                 if not found_some_file:
-                    possible_paths = (
+                    for possible_path in (
                         (
                             (relative_to / path).resolve().with_suffix(suffix)
                             if suffix
                             else (relative_to / path).resolve()
                         )
                         for suffix in common_extensions
-                    )
-                    yield from possible_paths
+                    ):
+                        if possible_path not in visited:
+                            visited.add(possible_path)
+                            yield possible_path
