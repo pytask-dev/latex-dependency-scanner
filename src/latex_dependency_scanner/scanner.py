@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import re
+from dataclasses import dataclass
 from pathlib import Path
 from typing import TYPE_CHECKING
 
@@ -49,6 +50,13 @@ REGEX_TEX = re.compile(
 document."""
 
 
+@dataclass(frozen=True)
+class _ScanContext:
+    """Immutable path resolution state for a scanned document."""
+
+    relative_to: Path
+
+
 def scan(paths: Path | list[Path]) -> list[Path]:
     """Scan the documents provided as paths for included files.
 
@@ -72,7 +80,7 @@ def scan(paths: Path | list[Path]) -> list[Path]:
 def yield_nodes_from_node(  # noqa: C901, PLR0912
     node: Path,
     nodes: list[Path],
-    relative_to: Path | None = None,
+    context: _ScanContext | None = None,
 ) -> Generator[Path, None, None]:
     r"""Yield nodes from node.
 
@@ -103,7 +111,7 @@ def yield_nodes_from_node(  # noqa: C901, PLR0912
     if node not in nodes:
         yield node
 
-    relative_to = node.parent if relative_to is None else relative_to
+    context = _ScanContext(node.parent) if context is None else context
 
     text = node.read_text(encoding="utf-8")
     for match in REGEX_TEX.finditer(text):
@@ -112,17 +120,18 @@ def yield_nodes_from_node(  # noqa: C901, PLR0912
 
         for path in match.group("file").split(","):
             if path:
+                child_context = context
                 if match.group("type") == "import":
-                    path = relative_to.joinpath(  # noqa: PLW2901
+                    unresolved_path = context.relative_to.joinpath(
                         match.group("relative_to"), path
                     )
                 elif match.group("type") == "subimport":
-                    path = node.parent.joinpath(  # noqa: PLW2901
+                    unresolved_path = node.parent.joinpath(
                         match.group("relative_to"), path
                     )
-                    relative_to = path.parent
+                    child_context = _ScanContext(unresolved_path.parent)
                 else:
-                    pass
+                    unresolved_path = context.relative_to / path
 
                 if match.group("type") in ["usepackage", "RequirePackage"]:
                     common_extensions = [".sty"]
@@ -148,7 +157,7 @@ def yield_nodes_from_node(  # noqa: C901, PLR0912
                 found_some_file = False
 
                 for extension in common_extensions:
-                    path_w_ext = relative_to.joinpath(path).resolve()
+                    path_w_ext = unresolved_path.resolve()
 
                     if extension:
                         path_w_ext = path_w_ext.with_suffix(extension)
@@ -157,7 +166,7 @@ def yield_nodes_from_node(  # noqa: C901, PLR0912
                         found_some_file = True
                         if path_w_ext.suffix in COMMON_TEX_EXTENSIONS:
                             yield from yield_nodes_from_node(
-                                path_w_ext, nodes, relative_to
+                                path_w_ext, nodes, child_context
                             )
                         elif path_w_ext not in nodes:
                             yield path_w_ext
@@ -168,9 +177,9 @@ def yield_nodes_from_node(  # noqa: C901, PLR0912
                 if not found_some_file:
                     possible_paths = (
                         (
-                            (relative_to / path).resolve().with_suffix(suffix)
+                            unresolved_path.resolve().with_suffix(suffix)
                             if suffix
-                            else (relative_to / path).resolve()
+                            else unresolved_path.resolve()
                         )
                         for suffix in common_extensions
                     )

@@ -255,6 +255,24 @@ def test_sub_import_without_extension_and_file(tmp_path):
     ]
 
 
+def test_sub_import_does_not_change_sibling_path_context(tmp_path):
+    tmp_path.joinpath("document.tex").write_text(
+        r"""\subimport{sections/}{section}
+\input{sibling}"""
+    )
+    tmp_path.joinpath("sections").mkdir()
+    tmp_path.joinpath("sections", "section.tex").write_text("Section content.")
+    tmp_path.joinpath("sibling.tex").write_text("Sibling content.")
+
+    nodes = scan(tmp_path / "document.tex")
+
+    assert nodes == [
+        tmp_path / "document.tex",
+        tmp_path / "sections" / "section.tex",
+        tmp_path / "sibling.tex",
+    ]
+
+
 @needs_latexmk
 @needs_import_sty
 def test_mixed_import_and_subimport(tmp_path):
