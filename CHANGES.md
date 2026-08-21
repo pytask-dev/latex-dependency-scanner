@@ -5,7 +5,7 @@ in reverse chronological order. Releases follow [semantic versioning](https://se
 
 ## 0.1.3 - 2026-xx-xx
 
-- Prevents sub-imports from changing the path context of sibling directives.
+- {pull}`86` prevents sub-imports from changing sibling directive path contexts.
 - {pull}`83` adds `.jpg` extension for graphics.
 - {pull}`84` updates the package and CI to support Python 3.10 through 3.14.
 - {pull}`31` adds rye.
