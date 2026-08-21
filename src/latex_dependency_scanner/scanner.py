@@ -17,6 +17,7 @@ COMMON_GRAPHICS_EXTENSIONS = [
     # Image formats.
     ".eps",
     ".jpeg",
+    ".jpg",
     ".pdf",
     ".png",
     ".ps",
