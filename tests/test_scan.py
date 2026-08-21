@@ -411,3 +411,37 @@ def test_biblatex_bibliography_without_extension_and_file(tmp_path):
     nodes = scan(tmp_path / "document.tex")
 
     assert nodes == [tmp_path / "document.tex", tmp_path / "bibliography.bib"]
+
+
+def test_local_classes_and_packages(tmp_path):
+    source = r"""
+    \documentclass{local}
+    \usepackage{custom,system-package}
+    """
+    tmp_path.joinpath("document.tex").write_text(textwrap.dedent(source))
+    tmp_path.joinpath("local.cls").write_text(r"\LoadClass{baseclass}")
+    tmp_path.joinpath("baseclass.cls").write_text("Local base class.")
+    tmp_path.joinpath("custom.sty").write_text(r"\RequirePackage{helper}")
+    tmp_path.joinpath("helper.sty").write_text("Local package helper.")
+
+    nodes = scan(tmp_path / "document.tex")
+
+    assert nodes == [
+        tmp_path / "document.tex",
+        tmp_path / "local.cls",
+        tmp_path / "baseclass.cls",
+        tmp_path / "custom.sty",
+        tmp_path / "helper.sty",
+    ]
+
+
+def test_system_classes_and_packages_are_omitted(tmp_path):
+    source = r"""
+    \documentclass{article}
+    \usepackage{geometry}
+    """
+    tmp_path.joinpath("document.tex").write_text(textwrap.dedent(source))
+
+    nodes = scan(tmp_path / "document.tex")
+
+    assert nodes == [tmp_path / "document.tex"]
