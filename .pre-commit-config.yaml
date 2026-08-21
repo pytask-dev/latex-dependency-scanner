@@ -15,17 +15,8 @@ repos:
     -   id: no-commit-to-branch
         args: [--branch, main]
     -   id: trailing-whitespace
--   repo: https://github.com/pre-commit/pygrep-hooks
-    rev: v1.10.0
-    hooks:
-    -   id: python-check-blanket-noqa
-    -   id: python-check-mock-methods
-    -   id: python-no-eval
-    -   id: python-no-log-warn
-    -   id: python-use-type-annotations
-    -   id: text-unicode-replacement-char
 -   repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.16.3
+    rev: v0.16.4
     hooks:
       - id: ruff-check
       - id: ruff-format
@@ -44,7 +35,7 @@ repos:
         args: [--wrap, "88"]
         files: (README\.md)
 -   repo: https://github.com/crate-ci/typos
-    rev: v1
+    rev: v1.49.0
     hooks:
     -   id: typos
 -   repo: meta

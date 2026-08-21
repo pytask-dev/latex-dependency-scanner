@@ -1,3 +1,6 @@
+[windows]
+set shell := ["powershell.exe", "-Command"]
+
 # Install all dependencies.
 install:
     uv sync --all-groups
@@ -16,7 +19,7 @@ typing:
 
 # Run linting.
 lint:
-    uvx pre-commit run -a
+    uvx prek run -a
 
 # Run all checks.
 check: lint typing test-cov
