@@ -5,6 +5,7 @@ in reverse chronological order. Releases follow [semantic versioning](https://se
 
 ## 0.1.3 - 2024-xx-xx
 
+- updates the package and CI to support Python 3.10 through 3.14.
 - {pull}`31` adds rye.
 
 ## 0.1.2 - 2023-10-02
