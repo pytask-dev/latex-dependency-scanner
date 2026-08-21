@@ -3,11 +3,18 @@
 This is a record of all past latex-dependency-scanner releases and what went into them
 in reverse chronological order. Releases follow [semantic versioning](https://semver.org/) and all releases are available on [PyPI](https://pypi.org/project/latex-dependency-scanner) and [Anaconda.org](https://anaconda.org/pytask/latex-dependency-scanner).
 
-## 0.1.3 - 2026-xx-xx
+## 0.2.0 - 2026-xx-xx
 
 - {pull}`82` adds support for glossaries and bib2gls.
 - {pull}`83` adds `.jpg` extension for graphics.
 - {pull}`84` updates the package and CI to support Python 3.10 through 3.14.
+- {pull}`42` enables the merge-group CI trigger.
+- {pull}`43` migrates development tooling to uv, just, and ty.
+- {pull}`50` hardens GitHub Actions workflows with zizmor.
+- {pull}`51` uses uv in the publish workflow.
+
+## 0.1.3 - 2024-xx-xx
+
 - {pull}`31` adds rye.
 
 ## 0.1.2 - 2023-10-02
