@@ -81,6 +81,32 @@ def test_input_or_include_without_extension_and_file(tmp_path, directive):
     ]
 
 
+def test_scan_handles_cyclic_inputs(tmp_path):
+    tmp_path.joinpath("first.tex").write_text(r"\input{second}")
+    tmp_path.joinpath("second.tex").write_text(r"\input{first}")
+
+    nodes = scan(tmp_path / "first.tex")
+
+    assert nodes == [tmp_path / "first.tex", tmp_path / "second.tex"]
+
+
+def test_scan_deduplicates_dependencies(tmp_path):
+    source = "\n".join(
+        [r"\input{included}", r"\input{included}", r"\input{missing}"] * 2
+    )
+    document = tmp_path / "document.tex"
+    document.write_text(source)
+    tmp_path.joinpath("included.tex").write_text("Included content.")
+
+    nodes = scan([document, document])
+
+    assert nodes == [
+        document,
+        tmp_path / "included.tex",
+        tmp_path / "missing.tex",
+    ]
+
+
 @needs_latexmk
 @pytest.mark.parametrize("image_ext", COMMON_GRAPHICS_EXTENSIONS)
 @pytest.mark.parametrize("has_extension", [True, False])
@@ -252,6 +278,24 @@ def test_sub_import_without_extension_and_file(tmp_path):
         tmp_path / "document.tex",
         tmp_path / "sections" / "section.tex",
         tmp_path / "sections" / "sub" / "content.tex",
+    ]
+
+
+def test_sub_import_does_not_change_sibling_path_context(tmp_path):
+    tmp_path.joinpath("document.tex").write_text(
+        r"""\subimport{sections/}{section}
+\input{sibling}"""
+    )
+    tmp_path.joinpath("sections").mkdir()
+    tmp_path.joinpath("sections", "section.tex").write_text("Section content.")
+    tmp_path.joinpath("sibling.tex").write_text("Sibling content.")
+
+    nodes = scan(tmp_path / "document.tex")
+
+    assert nodes == [
+        tmp_path / "document.tex",
+        tmp_path / "sections" / "section.tex",
+        tmp_path / "sibling.tex",
     ]
 
 
@@ -458,3 +502,37 @@ def test_glossaries_without_files(tmp_path):
         tmp_path / "acronyms.bib",
         tmp_path / "acronyms.glstex",
     ]
+
+
+def test_local_classes_and_packages(tmp_path):
+    source = r"""
+    \documentclass{local}
+    \usepackage{custom,system-package}
+    """
+    tmp_path.joinpath("document.tex").write_text(textwrap.dedent(source))
+    tmp_path.joinpath("local.cls").write_text(r"\LoadClass{baseclass}")
+    tmp_path.joinpath("baseclass.cls").write_text("Local base class.")
+    tmp_path.joinpath("custom.sty").write_text(r"\RequirePackage{helper}")
+    tmp_path.joinpath("helper.sty").write_text("Local package helper.")
+
+    nodes = scan(tmp_path / "document.tex")
+
+    assert nodes == [
+        tmp_path / "document.tex",
+        tmp_path / "local.cls",
+        tmp_path / "baseclass.cls",
+        tmp_path / "custom.sty",
+        tmp_path / "helper.sty",
+    ]
+
+
+def test_system_classes_and_packages_are_omitted(tmp_path):
+    source = r"""
+    \documentclass{article}
+    \usepackage{geometry}
+    """
+    tmp_path.joinpath("document.tex").write_text(textwrap.dedent(source))
+
+    nodes = scan(tmp_path / "document.tex")
+
+    assert nodes == [tmp_path / "document.tex"]

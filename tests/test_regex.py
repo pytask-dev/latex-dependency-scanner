@@ -25,6 +25,18 @@ from latex_dependency_scanner.scanner import REGEX_TEX
             "\\RequirePackage{}",
             {"type": "RequirePackage", "file": "", "relative_to": None},
         ),
+        (
+            "\\documentclass{article}",
+            {"type": "documentclass", "file": "article", "relative_to": None},
+        ),
+        (
+            "\\LoadClassWithOptions{article}",
+            {
+                "type": "LoadClassWithOptions",
+                "file": "article",
+                "relative_to": None,
+            },
+        ),
         ("\\RequirePackages{geometry}", None),
         ("\\RequirePackage", None),
         (

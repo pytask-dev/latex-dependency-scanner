@@ -6,6 +6,9 @@ in reverse chronological order. Releases follow [semantic versioning](https://se
 ## 0.2.0 - 2026-xx-xx
 
 - {pull}`82` adds support for glossaries and bib2gls.
+- {pull}`86` prevents sub-imports from changing sibling directive path contexts.
+- {pull}`87` adds project-local LaTeX classes and packages to scan results.
+- {pull}`85` prevents cyclic scans and removes duplicate dependencies from results.
 - {pull}`83` adds `.jpg` extension for graphics.
 - {pull}`84` updates the package and CI to support Python 3.10 through 3.14.
 - {pull}`42` enables the merge-group CI trigger.

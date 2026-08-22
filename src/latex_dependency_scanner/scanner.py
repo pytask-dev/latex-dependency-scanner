@@ -3,13 +3,14 @@
 from __future__ import annotations
 
 import re
+from dataclasses import dataclass
 from pathlib import Path
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from collections.abc import Generator
 
-COMMON_TEX_EXTENSIONS = [".ltx", ".tex"]
+COMMON_TEX_EXTENSIONS = [".cls", ".ltx", ".sty", ".tex"]
 """List[str]: List of typical file extensions that contain latex"""
 
 
@@ -38,9 +39,9 @@ COMMON_EXTENSIONS_IN_TEX = [
 
 
 REGEX_TEX = re.compile(
-    r"\\(?P<type>usepackage|RequirePackage|include|addbibresource|bibliography|putbib"
-    r"|includegraphics|input|(sub)?import|lstinputlisting|glsxtrresourcefile"
-    r"|GlsXtrLoadResources)"
+    r"\\(?P<type>documentclass|usepackage|RequirePackage|LoadClassWithOptions|"
+    r"LoadClass|include|addbibresource|bibliography|putbib|includegraphics|input|"
+    r"(sub)?import|lstinputlisting|glsxtrresourcefile|GlsXtrLoadResources)"
     r"(<[^<>]*>)?"
     r"(\[[^\[\]]*\])?"
     r"({(?P<relative_to>[^{}]*)})?(\[[^\[\]]*src=)?{(?P<file>[^{}]*)}",
@@ -48,6 +49,13 @@ REGEX_TEX = re.compile(
 )
 """re.Pattern: The regular expression pattern to extract included files from a LaTeX
 document."""
+
+
+@dataclass(frozen=True)
+class _ScanContext:
+    """Immutable path resolution state for a scanned document."""
+
+    relative_to: Path
 
 
 def scan(paths: Path | list[Path]) -> list[Path]:
@@ -64,16 +72,17 @@ def scan(paths: Path | list[Path]) -> list[Path]:
     paths = [Path(p) for p in paths]
 
     nodes: list[Path] = []
+    visited: set[Path] = set()
     for node in paths:
-        nodes.extend(yield_nodes_from_node(node, nodes))
+        nodes.extend(yield_nodes_from_node(node, visited))
 
     return nodes
 
 
-def yield_nodes_from_node(  # noqa: C901, PLR0912
+def yield_nodes_from_node(  # noqa: C901, PLR0912, PLR0915
     node: Path,
-    nodes: list[Path],
-    relative_to: Path | None = None,
+    visited: set[Path],
+    context: _ScanContext | None = None,
 ) -> Generator[Path, None, None]:
     r"""Yield nodes from node.
 
@@ -101,31 +110,46 @@ def yield_nodes_from_node(  # noqa: C901, PLR0912
     - If a document imports a file with ``\subimport{}{}``
 
     """
-    if node not in nodes:
-        yield node
+    resolved_node = node.resolve()
+    if resolved_node in visited:
+        return
 
-    relative_to = node.parent if relative_to is None else relative_to
+    visited.add(resolved_node)
+    yield node
+
+    context = _ScanContext(node.parent) if context is None else context
 
     text = node.read_text(encoding="utf-8")
     for match in REGEX_TEX.finditer(text):
-        if match.group("type") in ["usepackage", "RequirePackage"]:
-            continue
-
         for path in match.group("file").split(","):
             if path:
+                child_context = context
                 if match.group("type") == "import":
-                    path = relative_to.joinpath(  # noqa: PLW2901
+                    unresolved_path = context.relative_to.joinpath(
                         match.group("relative_to"), path
                     )
                 elif match.group("type") == "subimport":
-                    path = node.parent.joinpath(  # noqa: PLW2901
+                    unresolved_path = node.parent.joinpath(
                         match.group("relative_to"), path
                     )
-                    relative_to = path.parent
+                    child_context = _ScanContext(unresolved_path.parent)
                 else:
-                    pass
+                    unresolved_path = context.relative_to / path
 
-                if match.group("type") in ["usepackage", "RequirePackage"]:
+                is_local_tex_dependency = match.group("type") in [
+                    "documentclass",
+                    "LoadClass",
+                    "LoadClassWithOptions",
+                    "RequirePackage",
+                    "usepackage",
+                ]
+                if match.group("type") in [
+                    "documentclass",
+                    "LoadClass",
+                    "LoadClassWithOptions",
+                ]:
+                    common_extensions = [".cls"]
+                elif match.group("type") in ["usepackage", "RequirePackage"]:
                     common_extensions = [".sty"]
                 elif match.group("type") in [
                     "addbibresource",
@@ -154,7 +178,7 @@ def yield_nodes_from_node(  # noqa: C901, PLR0912
                 found_some_file = False
 
                 for extension in common_extensions:
-                    path_w_ext = relative_to.joinpath(path).resolve()
+                    path_w_ext = unresolved_path.resolve()
 
                     if extension:
                         path_w_ext = path_w_ext.with_suffix(extension)
@@ -163,21 +187,24 @@ def yield_nodes_from_node(  # noqa: C901, PLR0912
                         found_some_file = True
                         if path_w_ext.suffix in COMMON_TEX_EXTENSIONS:
                             yield from yield_nodes_from_node(
-                                path_w_ext, nodes, relative_to
+                                path_w_ext, visited, child_context
                             )
-                        elif path_w_ext not in nodes:
+                        elif path_w_ext not in visited:
+                            visited.add(path_w_ext)
                             yield path_w_ext
 
                         # Stop loop, if a file has been found.
                         break
 
-                if not found_some_file:
-                    possible_paths = (
+                if not found_some_file and not is_local_tex_dependency:
+                    for possible_path in (
                         (
-                            (relative_to / path).resolve().with_suffix(suffix)
+                            unresolved_path.resolve().with_suffix(suffix)
                             if suffix
-                            else (relative_to / path).resolve()
+                            else unresolved_path.resolve()
                         )
                         for suffix in common_extensions
-                    )
-                    yield from possible_paths
+                    ):
+                        if possible_path not in visited:
+                            visited.add(possible_path)
+                            yield possible_path
