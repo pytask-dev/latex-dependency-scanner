@@ -16,12 +16,12 @@ repos:
         args: [--branch, main]
     -   id: trailing-whitespace
 -   repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.16.4
+    rev: v0.16.5
     hooks:
       - id: ruff-check
       - id: ruff-format
 -   repo: https://github.com/tox-dev/pyproject-fmt
-    rev: v2.28.1
+    rev: v2.29.0
     hooks:
     -   id: pyproject-fmt
 -   repo: https://github.com/executablebooks/mdformat
