@@ -16,6 +16,7 @@ classifiers = [
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
   "Programming Language :: Python :: 3.14",
+  "Programming Language :: Python :: 3.15",
 ]
 dynamic = [ "version" ]
 [project.readme]
@@ -49,9 +50,9 @@ source = "vcs"
 allow-direct-references = true
 [tool.hatch.build]
 hooks.vcs.version-file = "src/latex_dependency_scanner/_version.py"
+targets.wheel.exclude = [ "tests" ]
 targets.sdist.exclude = [ "tests" ]
 targets.sdist.only-packages = true
-targets.wheel.exclude = [ "tests" ]
 targets.wheel.only-packages = true
 
 [tool.ruff]
@@ -61,8 +62,8 @@ unsafe-fixes = true
 select = [ "ALL" ]
 extend-ignore = [
   "COM812", # Comply with ruff-format
-  "ISC001", # Comply with ruff-format
   "CPY001",
+  "ISC001", # Comply with ruff-format
 ]
 per-file-ignores."tests/*" = [ "ANN", "D", "S101" ]
 isort.force-single-line = true
