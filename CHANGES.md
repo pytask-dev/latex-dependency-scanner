@@ -3,6 +3,10 @@
 This is a record of all past latex-dependency-scanner releases and what went into them
 in reverse chronological order. Releases follow [semantic versioning](https://semver.org/) and all releases are available on [PyPI](https://pypi.org/project/latex-dependency-scanner) and [Anaconda.org](https://anaconda.org/pytask/latex-dependency-scanner).
 
+## Unreleased
+
+- {pull}`104` raises the minimum supported Python version to 3.11.
+
 ## 0.1.3 - 2026-xx-xx
 
 - {pull}`86` prevents sub-imports from changing sibling directive path contexts.
