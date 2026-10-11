@@ -5,7 +5,7 @@ in reverse chronological order. Releases follow [semantic versioning](https://se
 
 ## Unreleased
 
-- Raise the minimum supported Python version to 3.11.
+- {pull}`104` raises the minimum supported Python version to 3.11.
 
 ## 0.1.3 - 2026-xx-xx
 
