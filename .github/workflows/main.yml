@@ -74,7 +74,9 @@ jobs:
       - name: Install LaTeX dependencies.
         if: runner.os != 'Windows'
         shell: bash -l {0}
-        run: tlmgr install import epstopdf biblatex biber
+        run: |
+          tlmgr update --self
+          tlmgr install import epstopdf biblatex biber
 
       # Tests.
 
